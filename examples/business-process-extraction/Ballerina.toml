@@ -1,0 +1,14 @@
+[package]
+org = "ballerinax"
+name = "business_process_extraction"
+version = "0.1.0"
+distribution = "2201.13.4"
+
+[build-options]
+observabilityIncluded = true
+
+[[dependency]]
+org = "ballerinax"
+name = "sap.signavio"
+version = "0.1.0"
+repository = "local"

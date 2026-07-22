@@ -1,0 +1,16 @@
+[package]
+distribution = "2201.13.4"
+org = "ballerinax"
+name = "sap.signavio"
+version = "@toml.version@"
+license = ["Apache-2.0"]
+authors = ["Ballerina"]
+keywords = ["Cost/Paid", "Vendor/SAP", "Area/ERP & Business Operations", "Type/Connector"]
+icon = "icon.png"
+repository = "https://github.com/ballerina-platform/module-ballerinax-sap.signavio"
+
+[build-options]
+observabilityIncluded = true
+
+[platform.java21]
+graalvmCompatible = true
