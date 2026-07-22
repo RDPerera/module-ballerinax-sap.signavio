@@ -602,7 +602,7 @@ public type IncomingInitiative record {
 
 public type BpmnImportRequest record {
     # The filename and content of the BPMN 2.0 XML file
-    @jsondata:Name {value: "bpmn2_file"}
+    @jsondata:Name {value: "bpmn2_0file"}
     record {byte[] fileContent; string fileName;} bpmn2File;
     # The ID of the model to create a new revision for
     string modelid?;

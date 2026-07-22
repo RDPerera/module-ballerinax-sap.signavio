@@ -264,16 +264,40 @@ isolated function getPathForQueryParam(map<anydata> queryParam, map<Encoding> en
     return restOfPath;
 }
 
+// After `jsondata:toJson(...).ensureType()`, a `record {byte[] fileContent; string fileName;}`
+// field no longer has that type at runtime - JSON has no byte-array representation, so
+// `fileContent` becomes a plain `json[]` of integers and the whole value becomes `map<json>`.
+// This reconstructs the original shape so file uploads don't get silently serialized as a
+// JSON-string blob instead of their raw bytes.
+isolated function asFilePayload(anydata value) returns record {byte[] fileContent; string fileName;}|() {
+    if value is map<json> {
+        json? fileContent = value["fileContent"];
+        json? fileName = value["fileName"];
+        if fileContent is json[] && fileName is string {
+            byte[] bytes = [];
+            foreach json item in fileContent {
+                if item is byte {
+                    bytes.push(item);
+                }
+            }
+            return {fileContent: bytes, fileName};
+        }
+    }
+    return ();
+}
+
 isolated function createBodyParts(record {|anydata...;|} anyRecord, map<Encoding> encodingMap = {})
 returns mime:Entity[]|error {
     mime:Entity[] entities = [];
     foreach [string, anydata] [key, value] in anyRecord.entries() {
         Encoding encodingData = encodingMap.hasKey(key) ? encodingMap.get(key) : {};
         string contentDisposition = string `form-data; name=${key};`;
-        if value is record {byte[] fileContent; string fileName;} {
-            string fileContentDisposition = string `${contentDisposition} filename=${value.fileName}`;
+        record {byte[] fileContent; string fileName;}? filePayload =
+            value is record {byte[] fileContent; string fileName;} ? value : asFilePayload(value);
+        if filePayload is record {byte[] fileContent; string fileName;} {
+            string fileContentDisposition = string `${contentDisposition} filename=${filePayload.fileName}`;
             mime:Entity entity = check constructEntity(fileContentDisposition, encodingData,
-                    value.fileContent);
+                    filePayload.fileContent);
             entities.push(entity);
         } else if value is byte[] {
             mime:Entity entity = check constructEntity(contentDisposition, encodingData, value);
@@ -295,6 +319,18 @@ returns mime:Entity[]|error {
                 mime:Entity entity = check constructEntity(contentDisposition, encodingData,
                         string:'join(",", ...valueStrArray));
                 entities.push(entity);
+            }
+        } else if value is anydata[] && value.length() > 0 && asFilePayload(value[0]) is record {} {
+            // An array of file payloads (e.g. multiple files under the same field name) -
+            // each becomes its own multipart part with the shared field name.
+            foreach anydata member in value {
+                record {byte[] fileContent; string fileName;}? memberFile = asFilePayload(member);
+                if memberFile is record {byte[] fileContent; string fileName;} {
+                    string fileContentDisposition = string `${contentDisposition} filename=${memberFile.fileName}`;
+                    mime:Entity entity = check constructEntity(fileContentDisposition, encodingData,
+                            memberFile.fileContent);
+                    entities.push(entity);
+                }
             }
         } else if value is record {} {
             mime:Entity entity = check constructEntity(contentDisposition, encodingData,

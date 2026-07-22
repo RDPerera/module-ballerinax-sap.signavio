@@ -700,6 +700,13 @@ public isolated client class Client {
         string resourcePath = string `/p/bpmn2_0-import`;
         http:Request request = new;
         mime:Entity[] bodyParts = check createBodyParts(check jsondata:toJson(payload).ensureType());
+        // This endpoint additionally requires the session's X-Signavio-ID value repeated as a
+        // "signavio-id" multipart field - sending it only as a header (as every other workspace
+        // operation expects) is silently rejected with a "BPMN2_0Import.NoFile" error.
+        mime:Entity signavioIdPart = new;
+        signavioIdPart.setContentDisposition(mime:getContentDispositionObject("form-data; name=signavio-id;"));
+        signavioIdPart.setText(self.workspaceSessionHeaders.get("X-Signavio-ID"));
+        bodyParts.push(signavioIdPart);
         request.setBodyParts(bodyParts);
         return self.workspaceClient->post(resourcePath, request, withSessionHeaders(self.workspaceSessionHeaders, headers));
     }
