@@ -8,8 +8,7 @@ _Edition_: Swan Lake
 This document records the sanitation done on top of the official OpenAPI specification from SapSignavio.
 The OpenAPI specification is a manually assembled/merged specification covering multiple SAP Signavio API
 surfaces (Authentication, Process Manager, Process Intelligence, Process Governance Analytics, Journey
-Modeler, Transformation Manager); it has not yet been published to
-[wso2/api-specs](https://github.com/wso2/api-specs).
+Modeler, Transformation Manager).
 These changes are done in order to improve the overall usability, and as workarounds for some known language limitations.
 
 1. Change `ODataError target` to nullable
