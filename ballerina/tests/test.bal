@@ -23,8 +23,9 @@ import ballerina/os;
 import ballerina/test;
 
 final boolean isLiveServer = os:getEnv("IS_LIVE_SERVER") == "true";
-final string gatewayUrl = isLiveServer ? "https://api.eu.signavio.cloud.sap" : "http://localhost:9090";
-final string workspaceUrl = isLiveServer ? "https://app-eu.signavio.com" : "http://localhost:9090";
+final string region = isLiveServer && os:getEnv("SAP_SIGNAVIO_REGION") != "" ? os:getEnv("SAP_SIGNAVIO_REGION") : "eu";
+final string gatewayUrl = isLiveServer ? string `https://api.${region}.signavio.cloud.sap` : "http://localhost:9090";
+final string workspaceUrl = isLiveServer ? string `https://app-${region}.signavio.com` : "http://localhost:9090";
 final string username = isLiveServer ? os:getEnv("SAP_SIGNAVIO_USERNAME") : "user@example.com";
 final string password = isLiveServer ? os:getEnv("SAP_SIGNAVIO_PASSWORD") : "test_password";
 final string odataAccessToken = isLiveServer ? os:getEnv("SAP_SIGNAVIO_ODATA_TOKEN") : "mock-odata-token";
@@ -57,8 +58,8 @@ isolated function getSignavio() returns Client {
 isolated function testAuthenticate() returns error? {
     Client signavio = getSignavio();
     string response = check signavio->authenticate({
-        name: "user@example.com",
-        password: "secret",
+        name: username,
+        password,
         tokenonly: true
     });
     test:assertTrue(response.length() > 0);
@@ -129,7 +130,11 @@ isolated function testListDictionaryEntries() returns error? {
 isolated function testCreateDictionaryEntry() returns error? {
     Client signavio = getSignavio();
     DictionaryResponse response = check signavio->createDictionaryEntry(
-        {title: "Supplier", category: "cat-org-units", description: "An external party providing goods or services."}
+        {
+            title: "Supplier (sap.signavio connector test)",
+            category: "cat-org-units",
+            description: "An external party providing goods or services."
+        }
     );
     test:assertEquals(response.rel, "gitem");
 }
@@ -194,13 +199,33 @@ isolated function testGetBpmnXml() returns error? {
     test:assertTrue(response.toString().length() > 0);
 }
 
+// A minimal but valid BPMN 2.0 document - the mock server accepts any bytes, but a live
+// tenant validates the XML and requires a BPMNDI (diagram interchange) section; without one
+// it returns 200 OK with the model uncreated and a "MissingBPMNDIPart" error in the body.
+final string & readonly minimalBpmnXml = string `<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             id="defs1" targetNamespace="http://www.signavio.com/bpmn20">
+  <process id="test_process" name="Connector test process" isExecutable="false">
+    <startEvent id="start"/>
+  </process>
+  <bpmndi:BPMNDiagram id="diagram1">
+    <bpmndi:BPMNPlane id="plane1" bpmnElement="test_process">
+      <bpmndi:BPMNShape id="start_di" bpmnElement="start">
+        <omgdc:Bounds x="100" y="100" width="36" height="36"/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>`;
+
 @test:Config {groups: ["live_tests", "mock_tests"]}
 isolated function testImportBpmnXml() returns error? {
     Client signavio = getSignavio();
     BpmnImportResult response = check signavio->importBpmn20Xml({
         bpmn2File: {
             fileName: "process.bpmn",
-            fileContent: "<definitions/>".toBytes()
+            fileContent: minimalBpmnXml.toBytes()
         }
     });
     test:assertTrue(response.mainModelId !is ());
@@ -316,7 +341,9 @@ isolated function testListObjectives() returns error? {
 isolated function testSearch() returns error? {
     Client signavio = getSignavio();
     http:Response response = check signavio->search(queries = {q: "invoice"});
-    test:assertEquals(response.statusCode, 304);
+    // The mock server always returns 304 (Not Modified) for this query; a live tenant with no
+    // matching ETag/cache context legitimately returns 200 with fresh results instead.
+    test:assertTrue(response.statusCode == 304 || response.statusCode == 200);
 }
 
 @test:Config {groups: ["live_tests", "mock_tests"]}
