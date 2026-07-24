@@ -20,7 +20,6 @@
 
 import ballerina/http;
 import ballerina/mime;
-import ballerinax/sap.signavio.oas;
 
 listener http:Listener ep0 = new (9090);
 
@@ -69,7 +68,7 @@ service / on ep0 {
     # + return - returns can be any of following types
     # http:Ok (Data for the given entity, returned as a JSON schema)
     resource function get pi/signal/odata/v1/[string entitySetName](@http:Query {name: "$count"} boolean? dollarCount, @http:Query {name: "$deltatoken"} string? dollarDeltatoken, @http:Query {name: "$expand"} string? dollarExpand, @http:Query {name: "$filter"} string? dollarFilter, @http:Query {name: "$format"} string? dollarFormat, @http:Query {name: "$id"} string? dollarId, @http:Query {name: "$orderby"} string? dollarOrderby, @http:Query {name: "$search"} string? dollarSearch, @http:Query {name: "$select"} string[] dollarSelect = [], int? skip = (), @http:Query {name: "$skiptoken"} string? dollarSkiptoken = (), @http:Query {name: "$top"} int? dollarTop = ()) returns OdataOutput|ODataErrorResponseBadRequest|ODataErrorResponseUnauthorized|ODataErrorResponseForbidden|ODataErrorResponseNotFound|ODataErrorResponseNotAcceptable|ODataErrorResponseUnsupportedMediaType|ODataErrorResponseUnprocessableEntity|ODataErrorResponseInternalServerError|ODataErrorResponseServiceUnavailable|ODataErrorResponseGatewayTimeout {
-        return <oas:OdataOutput>{
+        return <OdataOutput>{
             atOdataContext: "https://api.eu.signavio.cloud.sap/pi/signal/odata/v1/$metadata#" + entitySetName,
             atOdataCount: 2,
             value: [

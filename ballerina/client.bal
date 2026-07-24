@@ -15,7 +15,6 @@
 // under the License.
 
 import ballerina/http;
-import ballerinax/sap.signavio.oas;
 
 # The `ballerinax/sap.signavio` client. Wraps the generated `oas` client and adds transparent
 # re-authentication: when a request comes back unauthenticated (the gateway JWT is valid ~24h and
@@ -23,7 +22,7 @@ import ballerinax/sap.signavio.oas;
 # once and replays the request, so a long-lived client instance keeps working without manual
 # re-initialization.
 public isolated client class Client {
-    final oas:Client oasClient;
+    final GeneratedClient oasClient;
 
     # Gets invoked to initialize the `connector`. Exchanges `config.auth` for a gateway JWT and a
     # Process Manager workspace session; both are refreshed automatically when they expire.
@@ -33,7 +32,7 @@ public isolated client class Client {
     # + workspaceUrl - URL of the SAP Signavio Process Manager workspace. Defaults to the URL derived from `config.region`
     # + return - An error if connector initialization, or either login, failed
     public isolated function init(ConnectionConfig config, string? gatewayUrl = (), string? workspaceUrl = ()) returns error? {
-        self.oasClient = check new oas:Client(config, gatewayUrl, workspaceUrl);
+        self.oasClient = check new GeneratedClient(config, gatewayUrl, workspaceUrl);
     }
 
     # List of case-variables resources
