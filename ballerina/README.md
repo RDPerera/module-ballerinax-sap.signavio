@@ -4,7 +4,7 @@
 
 ## Setup guide
 
-To use the SAP Signavio connector, you need an SAP Signavio workspace account (a user name/email and password).
+To use the SAP Signavio connector, you need an SAP Signavio workspace account (a username/email and password).
 
 1. Sign in to your [SAP Signavio](https://www.signavio.com/) workspace and note the region of your tenant (`au`, `ca`, `eu`, `jp`, `kr`, `sgp`, or `us`) — it determines the hostnames the connector connects to (e.g. `api.eu.signavio.cloud.sap` and `app-eu.signavio.com`).
 
@@ -22,6 +22,7 @@ To use the `sap.signavio` connector in your Ballerina application, update the `.
 ### Step 1: Import the module
 
 ```ballerina
+import ballerina/io;
 import ballerinax/sap.signavio;
 ```
 

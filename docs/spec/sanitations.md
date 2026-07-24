@@ -5,7 +5,7 @@ _Edition_: Swan Lake
 
 # Sanitation for OpenAPI specification
 
-This document records the sanitation done on top of the official OpenAPI specification from SapSignavio.
+This document records the sanitation done on top of the official OpenAPI specification from SAP Signavio.
 The OpenAPI specification is a manually assembled/merged specification covering multiple SAP Signavio API
 surfaces (Authentication, Process Manager, Process Intelligence, Process Governance Analytics, Journey
 Modeler, Transformation Manager).

@@ -110,6 +110,9 @@ public type ListGroupUsersHeaders record {
 
 public type ValueDriver "IT_CAPACITY_PLANNING"|"IMPROVE_DEMAND_FORECAST_ACCURACY"|"IMPROVE_ON_TIME_DELIVERY"|"IMPROVE_FTE_PRODUCTIVITY"|"IMPROVE_USER_COMPLIANCE"|"INCREASE_CASH_FORECAST_ACCURACY"|"INCREASE_DAYS_PAYABLES"|"INCREASE_EFFECTIVENESS_MARKETING"|"OPERATIONAL_EXCELLENCE"|"REDUCE_HR_MANUAL_TRANSACTION"|"REDUCE_ASSET_COST"|"REDUCE_CUSTOMER_CHURN"|"REDUCE_DATA_MANAGEMENT_COST"|"REDUCE_DAYS_IN_INVENTORY"|"REDUCE_DAYS_SALES"|"REDUCE_DAYS_CLOSE_ANNUAL_BOOKS"|"REDUCE_FINANCE_COST"|"REDUCE_MANUFACTURING_CYCLE_TIME"|"REDUCE_READING_TO_INVOICE_TIME"|"REDUCE_NON_COMPLIANT_SERVICES"|"REDUCE_SUPPLY_CHAIN_PLANNING_COST"|"REDUCE_REVENUE_LOSS"|"REDUCE_SALES_COSTS"|"REDUCE_SERVICE_SUPPORT_COST"|"REDUCE_TIME_TO_FILL"|"REDUCE_TIME_TO_MARKET"|"REDUCE_LOGISTICS_COST"|"REDUCE_MANUFACTURING_COSTS"|"REDUCE_UNPLANNED_DOWNTIME"|"REDUCE_UNCOLLECTIBLE_ACCOUNTS"|"REDUCE_EMISSIONS_COST"|"REDUCE_WASTE_GENERATION_COST"|"REDUCE_COMPLIANCE_AND_RISK_MANAGEMENT_COST"|"INCREASE_BUSINESS_PROCESS_HARMONIZATION"|"INCREASE_ADHERENCE_TO_STANDARDIZED_SAP_BUSINESS_PROCESSES";
 
+// >>> MANUALLY MAINTAINED - NOT REGENERATED. `Credentials` and `ConnectionConfig` are hand-written
+// overrides (see docs/spec/sanitations.md item 2); `bal openapi` does not produce them. Reconcile
+// this block against any regenerated output before committing a regeneration. <<<
 # SAP Signavio account credentials. The connector uses these to transparently
 # obtain both the API gateway access token (`POST /auth/v1/token`) and the
 # Process Manager workspace session (`POST /p/login`) - no separate login
@@ -169,10 +172,11 @@ public type ConnectionConfig record {|
     http:ClientSocketConfig socketConfig = {};
     # Enables the inbound payload validation functionality which provided by the constraint package. Enabled by default
     boolean validation = true;
-    # Enables relaxed data binding on the client side. When enabled, `nil` values are treated as optional, 
+    # Enables relaxed data binding on the client side. When enabled, `nil` values are treated as optional,
     # and absent fields are handled as `nilable` types. Enabled by default.
     boolean laxDataBinding = true;
 |};
+// <<< END MANUALLY MAINTAINED block (Credentials / ConnectionConfig) >>>
 
 public type UsersNameResourceAttribute string?;
 

@@ -117,20 +117,25 @@ public isolated client class Client {
                 "application/x-www-form-urlencoded");
         http:Response loginResponse = check self.workspaceClient->post("/p/login", loginRequest);
         string signavioId = check loginResponse.getTextPayload();
-        string jsessionId = "";
+        // Forward every cookie the login response set, not just JSESSIONID - the workspace host
+        // is load-balanced and sets an affinity cookie (e.g. AWSELB/LBROUTEID) that must be echoed
+        // back, or a follow-up request routed to a different node fails to find the session.
+        boolean hasSession = false;
+        string[] cookiePairs = [];
         foreach http:Cookie cookie in loginResponse.getCookies() {
+            cookiePairs.push(string `${cookie.name}=${cookie.value}`);
             if cookie.name == "JSESSIONID" {
-                jsessionId = cookie.value;
+                hasSession = true;
             }
         }
-        if jsessionId == "" {
+        if !hasSession {
             return error("Failed to establish a SAP Signavio Process Manager workspace session: no JSESSIONID cookie was returned. Check the supplied username/password.");
         }
         // `Accept: application/json` is required - some Process Manager routes (e.g. the
         // dictionary/glossary GET endpoints) serve an HTML browser page by default and only
         // return their JSON representation when this is explicitly requested.
         map<string> & readonly newSessionHeaders = {
-            "Cookie": string `JSESSIONID=${jsessionId}`,
+            "Cookie": string:'join("; ", ...cookiePairs),
             "X-Signavio-ID": signavioId,
             "Accept": "application/json"
         };
