@@ -1,6 +1,6 @@
 _Author_: RDPerera \
 _Created_: 2026/07/16 \
-_Updated_: 2026/07/22 \
+_Updated_: 2026/07/24 \
 _Edition_: Swan Lake
 
 # Sanitation for OpenAPI specification
@@ -79,14 +79,21 @@ Two operation groups were probed against a live tenant and found to consistently
 - **Updated**: Added `asFilePayload()`, which recognizes this JSON-converted shape (a `map<json>` with a `json[]` `fileContent` and a `string` `fileName`) and reconstructs the original `byte[]`, for both a single file field and an array of file fields (`uploadSchemaAndData`'s `files` array has the same shape and the same bug).
 - **Reason**: Discovered while diagnosing sanitation 12 - even after fixing the field name, imports failed until this was found by writing a plain reproduction that inspected the runtime type of the payload's file field post-JSON-conversion. This affects every file-upload operation, not just BPMN import; `uploadSchemaAndData` was fixed the same way even though it couldn't be re-verified live (Ingestion isn't licensed on the test tenant), since the bug is unrelated to and independent of that entitlement gap.
 
-Regenerating this connector from `docs/spec/aligned_ballerina_openapi.json` would currently discard sanitations 2-13, since they go beyond what `bal openapi` can express (a login handshake isn't representable as an OpenAPI security scheme, and the multipart field-name/extra-field fixes and the `createBodyParts` byte-array bug are in hand-maintained code, not the spec). The spec itself should be corrected (split the single server into the two real backends, drop `ApiKeysConfig`/browser-cookie security schemes, fix the `/spm/v1` paths, the doubled `/v1/objectives` segment, the dictionary-entry response shapes, and the `bpmn2_file`/`bpmn2_0file` field name) before the next regeneration, and these hand-changes reconciled against the regenerated output.
+14. Wrapped the generated client to add transparent token/session refresh (gmail-style module split)
+- **Original**: The generated client (`client.bal`/`types.bal`/`utils.bal`) was the public API directly. `Client.init()` obtained the gateway JWT and the workspace session once and held them for the client's lifetime, baking the JWT into `gatewayClient`'s config. A client instance living past the gateway JWT's ~24h TTL (confirmed by decoding the token's `exp` claim against a live tenant) or the workspace session's server-side timeout would then fail every subsequent call with an auth error until re-initialized - a real reliability gap for long-lived consumers (e.g. an HTTP service that constructs the client once at startup).
+- **Updated**: Adopted the `ballerinax/googleapis.gmail` layout. The generated client moved verbatim into a `modules/oas` submodule, and the public `ballerinax/sap.signavio` module became a hand-written wrapper over it:
+  - `oas:Client` now keeps the gateway JWT and workspace session in `lock`-guarded mutable state instead of baking them into the http clients. `gatewayClient` is built plain and the JWT is injected per request (`gatewayHeaders`); the session headers are read per request (`currentSessionHeaders`); and a public `reauthenticate()` re-runs both logins (`POST /auth/v1/token` and `POST /p/login`) and atomically swaps in the fresh state.
+  - The root `Client` (`client.bal`) delegates each of the 92 operations to `oas:Client` and, when a call comes back HTTP 401, calls `reauthenticate()` once and replays the request. `types.bal` re-exports the 243 public `oas` types so the public API is unchanged and self-contained (callers still import only `ballerinax/sap.signavio`).
+- **Reason**: A pure-Ballerina *transparent* wrapper (one that passes the caller's expected type straight through to the HTTP client) is impossible - a dependently-typed function must have an `external`/Java body - so the SAP Business One approach (`b1_http_client.bal`) would require adding a Java native module. Rebuilding the inner client on 401 was also ruled out because `ConnectionConfig` embeds `http:*` config records and is not `Cloneable`, so it cannot be stored for reconstruction. Injecting refreshable auth per request inside `oas:Client` and retrying on 401 in the wrapper closes the expiry gap with neither Java nor a config-storage workaround. Covered by the `testReauthenticatesOn401` mock test (a sentinel request is rejected with 401 exactly once, and the wrapper must re-login and replay to succeed).
+
+Regenerating this connector from `docs/spec/aligned_ballerina_openapi.json` regenerates only the `modules/oas` submodule (see the CLI command below); the hand-written wrapper (`client.bal`), the type re-exports (`types.bal`), and the `reauthenticate`/per-request-auth changes in the root module are not touched by `bal openapi`. Within `modules/oas`, sanitations 2-13 would still be discarded on regeneration, since they go beyond what `bal openapi` can express (a login handshake isn't representable as an OpenAPI security scheme, and the multipart field-name/extra-field fixes and the `createBodyParts` byte-array bug are in hand-maintained code, not the spec). The spec itself should be corrected (split the single server into the two real backends, drop `ApiKeysConfig`/browser-cookie security schemes, fix the `/spm/v1` paths, the doubled `/v1/objectives` segment, the dictionary-entry response shapes, and the `bpmn2_file`/`bpmn2_0file` field name) before the next regeneration, and these hand-changes reconciled against the regenerated output.
 
 ## OpenAPI cli command
 
-The following command was used to generate the Ballerina client from the OpenAPI specification. The command should be executed from the repository root directory.
+The following command was used to generate the Ballerina client from the OpenAPI specification. The command should be executed from the repository root directory. Since the generated client now lives in the `oas` submodule (sanitation 14), the output is directed there so the hand-written wrapper in the root module is left untouched.
 
 ```bash
-bal openapi -i docs/spec/aligned_ballerina_openapi.json --mode client --client-methods remote --license docs/license.txt -o .
+bal openapi -i docs/spec/aligned_ballerina_openapi.json --mode client --client-methods remote --license docs/license.txt -o ballerina/modules/oas
 ```
 
 Note: The license year in `docs/license.txt` is currently 2026; update it before regenerating if the year has changed.

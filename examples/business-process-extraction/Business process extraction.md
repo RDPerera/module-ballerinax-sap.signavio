@@ -6,7 +6,7 @@ The connector handles authentication internally: `signavio:Client.init()` exchan
 
 ## Prerequisites
 
-- Ballerina Swan Lake 2201.13.x or later
+- Ballerina Swan Lake 2201.12.x or later
 - Push the connector to the local repository:
   ```bash
   cd ../../ballerina

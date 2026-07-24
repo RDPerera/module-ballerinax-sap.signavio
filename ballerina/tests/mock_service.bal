@@ -19,6 +19,7 @@
 // under the License.
 
 import ballerina/http;
+import ballerinax/sap.signavio.oas;
 
 listener http:Listener ep0 = new (9090);
 
@@ -67,7 +68,7 @@ service / on ep0 {
     # + return - returns can be any of following types
     # http:Ok (Data for the given entity, returned as a JSON schema)
     resource function get pi/signal/odata/v1/[string entitySetName](@http:Query {name: "$count"} boolean? dollarCount, @http:Query {name: "$deltatoken"} string? dollarDeltatoken, @http:Query {name: "$expand"} string? dollarExpand, @http:Query {name: "$filter"} string? dollarFilter, @http:Query {name: "$format"} string? dollarFormat, @http:Query {name: "$id"} string? dollarId, @http:Query {name: "$orderby"} string? dollarOrderby, @http:Query {name: "$search"} string? dollarSearch, @http:Query {name: "$select"} string[] dollarSelect = [], int? skip = (), @http:Query {name: "$skiptoken"} string? dollarSkiptoken = (), @http:Query {name: "$top"} int? dollarTop = ()) returns OdataOutput|ODataErrorResponseBadRequest|ODataErrorResponseUnauthorized|ODataErrorResponseForbidden|ODataErrorResponseNotFound|ODataErrorResponseNotAcceptable|ODataErrorResponseUnsupportedMediaType|ODataErrorResponseUnprocessableEntity|ODataErrorResponseInternalServerError|ODataErrorResponseServiceUnavailable|ODataErrorResponseGatewayTimeout {
-        return <OdataOutput>{
+        return <oas:OdataOutput>{
             atOdataContext: "https://api.eu.signavio.cloud.sap/pi/signal/odata/v1/$metadata#" + entitySetName,
             atOdataCount: 2,
             value: [
@@ -150,7 +151,13 @@ service / on ep0 {
     # + executionId - Ingestion request execution Id
     # + return - returns can be any of following types
     # http:Ok (OK)
-    resource function get spi/ingestions/v1/[string executionId]/status() returns ExecutionStatusDto|ErrorResponseDtoBadRequest|ErrorResponseDtoUnauthorized|ErrorResponseDtoNotFound|ErrorResponseDtoInternalServerError {
+    resource function get spi/ingestions/v1/[string executionId]/status() returns ExecutionStatusDto|http:Unauthorized|ErrorResponseDtoBadRequest|ErrorResponseDtoUnauthorized|ErrorResponseDtoNotFound|ErrorResponseDtoInternalServerError {
+        // Re-auth probe: the sentinel execution id is rejected with 401 exactly once, so the
+        // wrapper client must re-authenticate and replay the request to succeed. Any other
+        // execution id behaves normally.
+        if executionId == "reauth-probe" && nextReauthProbeCall() == 1 {
+            return http:UNAUTHORIZED;
+        }
         return <ExecutionStatusDto>{
             displayStatus: "Completed",
             message: "The ingestion request completed successfully.",
@@ -731,3 +738,14 @@ public type ODataErrorResponseGatewayTimeout record {|
     *http:GatewayTimeout;
     json body;
 |};
+
+// Counts calls to the ingestion-status re-auth probe so the mock can reject the first attempt
+// with 401 and accept the replay. Isolated + lock-guarded for safe concurrent test execution.
+isolated int reauthProbeCalls = 0;
+
+isolated function nextReauthProbeCall() returns int {
+    lock {
+        reauthProbeCalls += 1;
+        return reauthProbeCalls;
+    }
+}

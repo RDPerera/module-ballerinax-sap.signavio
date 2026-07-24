@@ -352,3 +352,14 @@ isolated function testQueryEntitySet() returns error? {
     OdataOutput response = check signavio->queryEntitySet("defects", queries = {dollarSelect: ["caseId"]});
     test:assertTrue(response.value.length() > 0);
 }
+
+// Verifies the wrapper transparently re-authenticates and replays a request when the server
+// responds 401 (an expired gateway JWT / workspace session). The mock rejects the sentinel
+// execution id "reauth-probe" with 401 exactly once; a successful result proves the wrapper
+// caught the 401, re-logged in, and retried. Mock-only (the live server can't be forced to 401).
+@test:Config {groups: ["mock_tests"]}
+isolated function testReauthenticatesOn401() returns error? {
+    Client signavio = getSignavio();
+    ExecutionStatusDto status = check signavio->getStatus("reauth-probe");
+    test:assertEquals(status.status, "COMPLETED");
+}

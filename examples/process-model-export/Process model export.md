@@ -4,7 +4,7 @@ This example browses the SAP Signavio Process Manager workspace, lists the conte
 
 ## Prerequisites
 
-- Ballerina Swan Lake 2201.13.x or later
+- Ballerina Swan Lake 2201.12.x or later
 - Push the connector to the local repository:
   ```bash
   cd ../../ballerina

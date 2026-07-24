@@ -21,10 +21,6 @@ To use the SAP Signavio connector, you need an SAP Signavio workspace account (a
    password = "<your-signavio-password>"
    ```
 
-   The connector handles authentication internally: `Client.init()` exchanges these credentials for both the API gateway JWT (`POST /auth/v1/token`) and the Process Manager workspace session (`POST /p/login`) - no separate login step, token, or cookie handling is needed.
-
-   The SIGNAL Engine OData operations (`getServiceDocument`, `getMetadata`, `queryEntitySet`) are the one exception: SAP Signavio authenticates these with a dedicated OData API access token rather than your account password, so that token can't be derived automatically. If you need those operations, generate an access token from the SAP Signavio UI (see the [SAP Signavio documentation](https://documentation.signavio.com/)) and pass it as `auth.odataAccessToken`.
-
 ## Quickstart
 
 To use the `sap.signavio` connector in your Ballerina application, update the `.bal` file as follows:
