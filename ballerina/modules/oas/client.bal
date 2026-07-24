@@ -429,7 +429,7 @@ public isolated client class Client {
     remote isolated function addAutomaticMeasurementToMetric(string journeyId, string metricId, AutomaticMeasurement payload, map<string|string[]> headers = {}) returns error? {
         string resourcePath = string `/jm/v1/journeys/${getEncodedUri(journeyId)}/metrics/${getEncodedUri(metricId)}/value`;
         http:Request request = new;
-        json jsonBody = jsondata:toJson(payload);
+        json jsonBody = jsondata:toJson(check payload.cloneWithType(AutomaticMeasurement));
         request.setPayload(jsonBody, "application/json");
         return self.gatewayClient->post(resourcePath, request, self.gatewayHeaders(headers));
     }
@@ -442,7 +442,7 @@ public isolated client class Client {
         string resourcePath = string `/auth/v1/token`;
         map<string|string[]> httpHeaders = http:getHeaderMap(headers);
         http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
+        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(check payload.cloneWithType(TokenRequest)).ensureType());
         request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
         return self.authClient->post(resourcePath, request, httpHeaders);
     }
@@ -467,7 +467,7 @@ public isolated client class Client {
         string resourcePath = string `/p/glossary`;
         map<string|string[]> httpHeaders = withSessionHeaders(self.currentSessionHeaders(), http:getHeaderMap(headers));
         http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
+        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(check payload.cloneWithType(DictionaryEntryRequest)).ensureType());
         request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
         return self.workspaceClient->post(resourcePath, request, httpHeaders);
     }
@@ -514,7 +514,7 @@ public isolated client class Client {
         string resourcePath = string `/p/glossary/${getEncodedUri(id)}/info`;
         map<string|string[]> httpHeaders = withSessionHeaders(self.currentSessionHeaders(), http:getHeaderMap(headers));
         http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
+        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(check payload.cloneWithType(DictionaryEntryUpdateRequest)).ensureType());
         request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
         return self.workspaceClient->put(resourcePath, request, httpHeaders);
     }
@@ -539,7 +539,7 @@ public isolated client class Client {
         string resourcePath = string `/p/glossarycategory`;
         map<string|string[]> httpHeaders = withSessionHeaders(self.currentSessionHeaders(), http:getHeaderMap(headers));
         http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
+        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(check payload.cloneWithType(DictionaryCategoryRequest)).ensureType());
         request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
         return self.workspaceClient->post(resourcePath, request, httpHeaders);
     }
@@ -564,7 +564,7 @@ public isolated client class Client {
         string resourcePath = string `/p/glossarycategory/${getEncodedUri(id)}`;
         map<string|string[]> httpHeaders = withSessionHeaders(self.currentSessionHeaders(), http:getHeaderMap(headers));
         http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
+        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(check payload.cloneWithType(DictionaryCategoryRequest)).ensureType());
         request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
         return self.workspaceClient->put(resourcePath, request, httpHeaders);
     }
@@ -598,7 +598,7 @@ public isolated client class Client {
     remote isolated function createDirectory(CreateDirectoryRequest payload, map<string|string[]> headers = {}) returns HyperMediaObject|error {
         string resourcePath = string `/p/directory`;
         http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
+        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(check payload.cloneWithType(CreateDirectoryRequest)).ensureType());
         request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
         return self.workspaceClient->post(resourcePath, request, withSessionHeaders(self.currentSessionHeaders(), headers));
     }
@@ -621,7 +621,7 @@ public isolated client class Client {
     remote isolated function moveDirectory(DirectoryId id, MoveDirectoryRequest payload, map<string|string[]> headers = {}) returns HyperMediaObject|error {
         string resourcePath = string `/p/directory/${getEncodedUri(id)}`;
         http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
+        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(check payload.cloneWithType(MoveDirectoryRequest)).ensureType());
         request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
         return self.workspaceClient->put(resourcePath, request, withSessionHeaders(self.currentSessionHeaders(), headers));
     }
@@ -654,7 +654,7 @@ public isolated client class Client {
     remote isolated function renameDirectory(DirectoryId id, RenameDirectoryData payload, map<string|string[]> headers = {}) returns DirectoryInfo|error {
         string resourcePath = string `/p/directory/${getEncodedUri(id)}/info`;
         http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
+        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(check payload.cloneWithType(RenameDirectoryData)).ensureType());
         request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
         return self.workspaceClient->put(resourcePath, request, withSessionHeaders(self.currentSessionHeaders(), headers));
     }
@@ -666,7 +666,7 @@ public isolated client class Client {
     remote isolated function publishItem(PublishData payload, map<string|string[]> headers = {}) returns HyperMediaObject[]|error {
         string resourcePath = string `/p/publish`;
         http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
+        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(check payload.cloneWithType(PublishData)).ensureType());
         request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
         return self.workspaceClient->post(resourcePath, request, withSessionHeaders(self.currentSessionHeaders(), headers));
     }
@@ -762,7 +762,7 @@ public isolated client class Client {
     remote isolated function importBpmn20Xml(BpmnImportRequest payload, map<string|string[]> headers = {}) returns BpmnImportResult|error {
         string resourcePath = string `/p/bpmn2_0-import`;
         http:Request request = new;
-        mime:Entity[] bodyParts = check createBodyParts(check jsondata:toJson(payload).ensureType());
+        mime:Entity[] bodyParts = check createBodyParts(check jsondata:toJson(check payload.cloneWithType(BpmnImportRequest)).ensureType());
         // This endpoint additionally requires the session's X-Signavio-ID value repeated as a
         // "signavio-id" multipart field - sending it only as a header (as every other workspace
         // operation expects) is silently rejected with a "BPMN2_0Import.NoFile" error.
@@ -801,7 +801,7 @@ public isolated client class Client {
     remote isolated function uploadSchemaAndData(IngestionDataRequest payload, map<string|string[]> headers = {}) returns UploadSchemaAndDataResponseDto|error {
         string resourcePath = string `/spi/ingestions/v1/data`;
         http:Request request = new;
-        mime:Entity[] bodyParts = check createBodyParts(check jsondata:toJson(payload).ensureType());
+        mime:Entity[] bodyParts = check createBodyParts(check jsondata:toJson(check payload.cloneWithType(IngestionDataRequest)).ensureType());
         request.setBodyParts(bodyParts);
         return self.gatewayClient->post(resourcePath, request, self.gatewayHeaders(headers));
     }
@@ -834,7 +834,7 @@ public isolated client class Client {
     remote isolated function createInitiative(IncomingInitiative payload, map<string|string[]> headers = {}) returns Initiative|error {
         string resourcePath = string `/transformationmanager/v1/initiatives`;
         http:Request request = new;
-        json jsonBody = jsondata:toJson(payload);
+        json jsonBody = jsondata:toJson(check payload.cloneWithType(IncomingInitiative));
         request.setPayload(jsonBody, "application/json");
         return self.gatewayClient->post(resourcePath, request, self.gatewayHeaders(headers));
     }
@@ -857,7 +857,7 @@ public isolated client class Client {
     remote isolated function updateInitiative(UUID initiativeId, IncomingInitiative payload, map<string|string[]> headers = {}) returns Initiative|error {
         string resourcePath = string `/transformationmanager/v1/initiatives/${getEncodedUri(initiativeId)}`;
         http:Request request = new;
-        json jsonBody = jsondata:toJson(payload);
+        json jsonBody = jsondata:toJson(check payload.cloneWithType(IncomingInitiative));
         request.setPayload(jsonBody, "application/json");
         return self.gatewayClient->put(resourcePath, request, self.gatewayHeaders(headers));
     }
@@ -890,7 +890,7 @@ public isolated client class Client {
     remote isolated function createAssetInitiative(UUID initiativeId, IncomingAsset payload, map<string|string[]> headers = {}) returns Asset|error {
         string resourcePath = string `/transformationmanager/v1/initiatives/${getEncodedUri(initiativeId)}/assets`;
         http:Request request = new;
-        json jsonBody = jsondata:toJson(payload);
+        json jsonBody = jsondata:toJson(check payload.cloneWithType(IncomingAsset));
         request.setPayload(jsonBody, "application/json");
         return self.gatewayClient->post(resourcePath, request, self.gatewayHeaders(headers));
     }
@@ -915,7 +915,7 @@ public isolated client class Client {
     remote isolated function updateAssetInitiative(UUID assetId, UUID initiativeId, IncomingAsset payload, map<string|string[]> headers = {}) returns Asset|error {
         string resourcePath = string `/transformationmanager/v1/initiatives/${getEncodedUri(initiativeId)}/assets/${getEncodedUri(assetId)}`;
         http:Request request = new;
-        json jsonBody = jsondata:toJson(payload);
+        json jsonBody = jsondata:toJson(check payload.cloneWithType(IncomingAsset));
         request.setPayload(jsonBody, "application/json");
         return self.gatewayClient->put(resourcePath, request, self.gatewayHeaders(headers));
     }
@@ -972,7 +972,7 @@ public isolated client class Client {
     remote isolated function createInsight(IncomingInsight payload, map<string|string[]> headers = {}) returns Insight|error {
         string resourcePath = string `/transformationmanager/v1/insights`;
         http:Request request = new;
-        json jsonBody = jsondata:toJson(payload);
+        json jsonBody = jsondata:toJson(check payload.cloneWithType(IncomingInsight));
         request.setPayload(jsonBody, "application/json");
         return self.gatewayClient->post(resourcePath, request, self.gatewayHeaders(headers));
     }
@@ -995,7 +995,7 @@ public isolated client class Client {
     remote isolated function updateInsight(UUID insightId, IncomingInsight payload, map<string|string[]> headers = {}) returns Insight|error {
         string resourcePath = string `/transformationmanager/v1/insights/${getEncodedUri(insightId)}`;
         http:Request request = new;
-        json jsonBody = jsondata:toJson(payload);
+        json jsonBody = jsondata:toJson(check payload.cloneWithType(IncomingInsight));
         request.setPayload(jsonBody, "application/json");
         return self.gatewayClient->put(resourcePath, request, self.gatewayHeaders(headers));
     }
@@ -1030,7 +1030,7 @@ public isolated client class Client {
         string resourcePath = string `/v1/model/${getEncodedUri(id)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
+        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(check payload.cloneWithType(ModelRequest)).ensureType());
         request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
         return self.gatewayClient->put(resourcePath, request, self.gatewayHeaders(headers));
     }
@@ -1054,7 +1054,7 @@ public isolated client class Client {
         string resourcePath = string `/v1/model`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
+        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(check payload.cloneWithType(ModelRequest)).ensureType());
         request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
         return self.gatewayClient->post(resourcePath, request, self.gatewayHeaders(headers));
     }
@@ -1079,7 +1079,7 @@ public isolated client class Client {
     remote isolated function updateModelInfo(string modelId, ModelInfoRequest payload, map<string|string[]> headers = {}) returns ModelInfoResponse|error {
         string resourcePath = string `/v1/model/${getEncodedUri(modelId)}/info`;
         http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
+        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(check payload.cloneWithType(ModelInfoRequest)).ensureType());
         request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
         return self.gatewayClient->put(resourcePath, request, self.gatewayHeaders(headers));
     }
@@ -1091,7 +1091,7 @@ public isolated client class Client {
     remote isolated function checkSyntax(SyntaxCheckRequest payload, map<string|string[]> headers = {}) returns SyntaxCheckResponse|error {
         string resourcePath = string `/v1/syntaxchecker`;
         http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
+        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(check payload.cloneWithType(SyntaxCheckRequest)).ensureType());
         request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
         return self.gatewayClient->post(resourcePath, request, self.gatewayHeaders(headers));
     }
@@ -1123,7 +1123,7 @@ public isolated client class Client {
     remote isolated function createMetaInfo(MetaInfoRequest payload, map<string|string[]> headers = {}) returns MetaResponseItem|error {
         string resourcePath = string `/p/meta`;
         http:Request request = new;
-        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(payload).ensureType());
+        string encodedRequestBody = createFormURLEncodedRequestBody(check jsondata:toJson(check payload.cloneWithType(MetaInfoRequest)).ensureType());
         request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
         return self.workspaceClient->post(resourcePath, request, withSessionHeaders(self.currentSessionHeaders(), headers));
     }
@@ -1146,7 +1146,7 @@ public isolated client class Client {
     remote isolated function updateExpirationDate(string modelID, ExpirationDate payload, map<string|string[]> headers = {}) returns ExpirationDate|error {
         string resourcePath = string `/v1/model/${getEncodedUri(modelID)}/approvalExpiration`;
         http:Request request = new;
-        json jsonBody = jsondata:toJson(payload);
+        json jsonBody = jsondata:toJson(check payload.cloneWithType(ExpirationDate));
         request.setPayload(jsonBody, "application/json");
         return self.gatewayClient->put(resourcePath, request, self.gatewayHeaders(headers));
     }
@@ -1159,7 +1159,7 @@ public isolated client class Client {
     remote isolated function createExpirationDate(string modelID, ExpirationDate payload, map<string|string[]> headers = {}) returns ExpirationDate|error {
         string resourcePath = string `/v1/model/${getEncodedUri(modelID)}/approvalExpiration`;
         http:Request request = new;
-        json jsonBody = jsondata:toJson(payload);
+        json jsonBody = jsondata:toJson(check payload.cloneWithType(ExpirationDate));
         request.setPayload(jsonBody, "application/json");
         return self.gatewayClient->post(resourcePath, request, self.gatewayHeaders(headers));
     }

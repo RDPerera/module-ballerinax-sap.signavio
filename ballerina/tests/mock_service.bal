@@ -19,6 +19,7 @@
 // under the License.
 
 import ballerina/http;
+import ballerina/mime;
 import ballerinax/sap.signavio.oas;
 
 listener http:Listener ep0 = new (9090);
@@ -370,6 +371,22 @@ service / on ep0 {
     }
 
     resource function post p/bpmn2_0\-import(http:Request request) returns BpmnImportResultOk|http:BadRequest|http:Unauthorized|http:InternalServerError {
+        // Mimic the real server: the file part must be named exactly "bpmn2_0file" (the
+        // @jsondata:Name wire name), otherwise the server rejects with "BPMN2_0Import.NoFile".
+        // This guards against the wire name being lost in payload serialization (see sanitations
+        // items 12 and 14).
+        mime:Entity[]|error parts = request.getBodyParts();
+        boolean hasNamedFile = false;
+        if parts is mime:Entity[] {
+            foreach mime:Entity part in parts {
+                if part.getContentDisposition().name == "bpmn2_0file" {
+                    hasNamedFile = true;
+                }
+            }
+        }
+        if !hasNamedFile {
+            return <http:BadRequest>{body: "BPMN2_0Import.NoFile"};
+        }
         return <BpmnImportResultOk>{
             body: {
                 mainModelId: "model-1a2b3c4d",
