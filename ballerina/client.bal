@@ -331,6 +331,7 @@ public isolated client class Client {
     #
     # + journeyId - The ID of the journey to be updated
     # + metricId - The ID of the metric to be updated
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Updated successfully
     remote isolated function addAutomaticMeasurementToMetric(string journeyId, string metricId, AutomaticMeasurement payload, map<string|string[]> headers = {}) returns error? {
@@ -344,6 +345,7 @@ public isolated client class Client {
 
     # Create an API access token (login)
     #
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Authentication successful. Following successful authentication, subsequent authenticated API requests must include the 'JSESSIONID' cookie
     remote isolated function authenticate(TokenRequest payload, AuthenticateHeaders headers = {}) returns string|error {
@@ -371,6 +373,7 @@ public isolated client class Client {
 
     # Creates a dictionary entry.
     #
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Returns a JSON object containing the created dictionary item
     remote isolated function createDictionaryEntry(DictionaryEntryRequest payload, CreateDictionaryEntryHeaders headers = {}) returns DictionaryResponse|error {
@@ -427,6 +430,7 @@ public isolated client class Client {
     # Updates a dictionary entry.
     #
     # + id - The ID of the dictionary entry to update
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - OK
     remote isolated function updateDictionaryEntry(string id, DictionaryEntryUpdateRequest payload, UpdateDictionaryEntryHeaders headers = {}) returns DictionaryResponse|error {
@@ -454,6 +458,7 @@ public isolated client class Client {
 
     # Creates a dictionary category.
     #
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - The newly created category
     remote isolated function createDictionaryCategory(DictionaryCategoryRequest payload, CreateDictionaryCategoryHeaders headers = {}) returns DictionaryResponse|error {
@@ -482,6 +487,7 @@ public isolated client class Client {
     # Updates an existing dictionary category.
     #
     # + id - The ID of the dictionary category to update
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Success
     remote isolated function updateDictionaryCategory(string id, DictionaryCategoryRequest payload, UpdateDictionaryCategoryHeaders headers = {}) returns DictionaryResponse|error {
@@ -523,6 +529,7 @@ public isolated client class Client {
 
     # Create a new directory
     #
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Successfully created folder and returns its meta-data. **Hint:** The expected HTTP response status is `200 OK` rather than `201 Created`
     remote isolated function createDirectory(CreateDirectoryRequest payload, map<string|string[]> headers = {}) returns HyperMediaObject|error {
@@ -551,6 +558,7 @@ public isolated client class Client {
     # Move a given directory.
     #
     # + id - The ID of the directory to move
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Successfully moved the directory and returned its updated meta-data
     remote isolated function moveDirectory(DirectoryId id, MoveDirectoryRequest payload, map<string|string[]> headers = {}) returns HyperMediaObject|error {
@@ -593,6 +601,7 @@ public isolated client class Client {
     # Rename a given directory.
     #
     # + id - The ID of the directory to rename
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Successfully renamed the directory and returned its updated meta-data
     remote isolated function renameDirectory(DirectoryId id, RenameDirectoryData payload, map<string|string[]> headers = {}) returns DirectoryInfo|error {
@@ -606,6 +615,7 @@ public isolated client class Client {
 
     # publish/unpublish an item
     #
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - successfully published or unpublished the item
     remote isolated function publishItem(PublishData payload, map<string|string[]> headers = {}) returns HyperMediaObject[]|error {
@@ -733,6 +743,7 @@ public isolated client class Client {
 
     # Import BPMN 2.0 XML
     #
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Success
     remote isolated function importBpmn20Xml(BpmnImportRequest payload, map<string|string[]> headers = {}) returns BpmnImportResult|error {
@@ -774,6 +785,7 @@ public isolated client class Client {
 
     # Upload schema and data
     #
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - OK
     remote isolated function uploadSchemaAndData(IngestionDataRequest payload, map<string|string[]> headers = {}) returns UploadSchemaAndDataResponseDto|error {
@@ -815,6 +827,7 @@ public isolated client class Client {
 
     # Create initiative
     #
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Successfully created initiative
     remote isolated function createInitiative(IncomingInitiative payload, map<string|string[]> headers = {}) returns Initiative|error {
@@ -843,6 +856,7 @@ public isolated client class Client {
     # Update initiative
     #
     # + initiativeId - The id of the initiative to update
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Successfully updated initiative
     remote isolated function updateInitiative(UUID initiativeId, IncomingInitiative payload, map<string|string[]> headers = {}) returns Initiative|error {
@@ -885,6 +899,7 @@ public isolated client class Client {
     # Create asset in initiative
     #
     # + initiativeId - The id of the initiative to add the asset to
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Successfully created asset
     remote isolated function createAssetInitiative(UUID initiativeId, IncomingAsset payload, map<string|string[]> headers = {}) returns Asset|error {
@@ -915,6 +930,7 @@ public isolated client class Client {
     #
     # + assetId - The id of the asset to update
     # + initiativeId - The id of the initiative containing the asset
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Successfully updated asset
     remote isolated function updateAssetInitiative(UUID assetId, UUID initiativeId, IncomingAsset payload, map<string|string[]> headers = {}) returns Asset|error {
@@ -987,6 +1003,7 @@ public isolated client class Client {
 
     # Create an insight
     #
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Successfully created insight
     remote isolated function createInsight(IncomingInsight payload, map<string|string[]> headers = {}) returns Insight|error {
@@ -1015,6 +1032,7 @@ public isolated client class Client {
     # Update insight
     #
     # + insightId - The id of the insight to update
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Successfully updated insight
     remote isolated function updateInsight(UUID insightId, IncomingInsight payload, map<string|string[]> headers = {}) returns Insight|error {
@@ -1057,6 +1075,7 @@ public isolated client class Client {
     # Update Model
     #
     # + id - The ID of the model to be updated
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + queries - Queries to be sent with the request
     # + return - Successful Operation
@@ -1085,6 +1104,7 @@ public isolated client class Client {
 
     # Create a new Model
     #
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + queries - Queries to be sent with the request
     # + return - Successful Operation
@@ -1115,6 +1135,7 @@ public isolated client class Client {
     # Update model info
     #
     # + modelId - The ID of the model
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Successful operation
     remote isolated function updateModelInfo(string modelId, ModelInfoRequest payload, map<string|string[]> headers = {}) returns ModelInfoResponse|error {
@@ -1128,6 +1149,7 @@ public isolated client class Client {
 
     # Performs a syntax check on a BPMN 2.0 process model.
     #
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Syntax check successful
     remote isolated function checkSyntax(SyntaxCheckRequest payload, map<string|string[]> headers = {}) returns SyntaxCheckResponse|error {
@@ -1168,6 +1190,7 @@ public isolated client class Client {
 
     # Create meta information
     #
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Successfully created meta information
     remote isolated function createMetaInfo(MetaInfoRequest payload, map<string|string[]> headers = {}) returns MetaResponseItem|error {
@@ -1196,6 +1219,7 @@ public isolated client class Client {
     # Update the approval expiration date.
     #
     # + modelID - The ID of the model
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Successfully updated the approval expiration date
     remote isolated function updateExpirationDate(string modelID, ExpirationDate payload, map<string|string[]> headers = {}) returns ExpirationDate|error {
@@ -1210,6 +1234,7 @@ public isolated client class Client {
     # Create a new approval expiration date.
     #
     # + modelID - The ID of the model
+    # + payload - The request payload
     # + headers - Headers to be sent with the request
     # + return - Successfully created the approval expiration date
     remote isolated function createExpirationDate(string modelID, ExpirationDate payload, map<string|string[]> headers = {}) returns ExpirationDate|error {

@@ -40,7 +40,9 @@ public type CreateModelQueries record {
 
 # The JSON:API resource ID
 public type CasesIdResourceAttribute record {
+    # The date
     string date?;
+    # The timestamp (epoch seconds)
     int:Signed32 timestamp?;
 };
 
@@ -59,6 +61,7 @@ public type FilesResourceReferencesResponseSchema record {
 
 # A JSON:API document with a single resource
 public type Success record {
+    # The JSON:API version information
     JsonApi jsonapi?;
     # Non-standard meta-information that can not be represented as an attribute or relationship
     Meta meta?;
@@ -350,7 +353,9 @@ public type GroupsResourceReference record {
 
 # The JSON:API resource ID
 public type FilesIdResourceAttribute record {
+    # The date
     string date?;
+    # The timestamp (epoch seconds)
     int:Signed32 timestamp?;
 };
 
@@ -715,7 +720,9 @@ public type Representation record {
 
 # The JSON:API resource ID
 public type CaseVariablesIdResourceAttribute record {
+    # The case identifier
     CaseVariablesIdResourceAttributeCazeId cazeId?;
+    # The unique identifier
     string id?;
 };
 
@@ -1106,7 +1113,9 @@ public type ListGroupsQueries record {
 
 # The JSON:API resource ID
 public type UsersIdResourceAttribute record {
+    # The date
     string date?;
+    # The timestamp (epoch seconds)
     int:Signed32 timestamp?;
 };
 
@@ -1213,12 +1222,16 @@ public type CasesResourceReference record {
 # [JSON format specification](http://docs.oasis-open.org/odata/odata-json-format/v4.0/odata-json-format-v4.0.html).
 # It can serialized into a JSON
 public type OdataOutput record {
+    # A link to the next page of results
     @jsondata:Name {value: "@odata.nextLink"}
     string? atOdataNextLink?;
+    # The total number of entities matching the request
     @jsondata:Name {value: "@odata.count"}
     int? atOdataCount?;
+    # The OData context URL for the response
     @jsondata:Name {value: "@odata.context"}
     string atOdataContext;
+    # The value of the item
     anydata[] value;
 };
 
@@ -1290,8 +1303,11 @@ public type Authorization record {
 # Details can be found in the
 # [OData JSON specification](https://docs.oasis-open.org/odata/odata-json-format/v4.0/odata-json-format-v4.0.html#_Toc453766639)
 public type ServiceDocumentEntity record {
+    # The kind of the item
     string kind;
+    # The name of the item
     string name;
+    # The URL of the item
     string url;
 };
 
@@ -1543,7 +1559,9 @@ public type FilesSizeResourceAttribute int:Signed32;
 
 # The JSON:API resource ID
 public type GroupsIdResourceAttribute record {
+    # The date
     string date?;
+    # The timestamp (epoch seconds)
     int:Signed32 timestamp?;
 };
 
@@ -1562,7 +1580,9 @@ public type CreateDictionaryEntryHeaders record {
 
 # The data required to publish or unpublish an item; only models and files can be published
 public type PublishData record {
+    # The mode of the item
     "publish"|"unpublish" mode;
+    # The associated models
     ObjectReference[] models;
 };
 
@@ -1574,7 +1594,9 @@ public type StencilsetBinding record {
 
 # This object can contain dynamic localized 'name' variants with the locale as a suffix of the attribute, e.g. name_fr_fr, name_en_us, name_de_de, etc
 public type RenameDirectoryData record {
+    # The name of the item
     string name;
+    # A description of the item
     string description;
 };
 
@@ -1617,8 +1639,10 @@ public type ListCasesHeaders record {
 # [ OData JSON specification](https://docs.oasis-open.org/odata/odata-json-format/v4.0/odata-json-format-v4.0.html#_Toc453766639)
 # Can be serialized into JSON
 public type ServiceDocument record {
+    # The OData context URL for the response
     @jsondata:Name {value: "@odata.context"}
     string atOdataContext;
+    # The value of the item
     ServiceDocumentEntity[] value;
 };
 
@@ -1704,15 +1728,22 @@ public type CaseVariablesNameResourceAttribute string?;
 
 # This object can contain dynamic localized 'name' variants with the locale as a suffix of the attribute, e.g. name_fr_fr, name_en_us, name_de_de, etc
 public type DirectoryInfo record {
+    # The identifier of the parent item
     ObjectReference parent?;
+    # A regular expression describing the allowed MIME types
     string allowedMimeTypeRegex?;
+    # The name of the parent item
     string parentName?;
+    # Whether the item has been deleted
     boolean deleted?;
+    # Whether the item is visible
     boolean visible?;
     # The time of creation. Dates are expressed according to ISO 8601,  with a space as separator and with timezone,  example: "2024-02-26 14:21:35 +0000"
     @constraint:String {pattern: re `^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} \+\d{4}$`}
     string created?;
+    # The name of the item
     string name;
+    # A description of the item
     string description?;
 };
 
@@ -1877,7 +1908,9 @@ public type ProcessInsightsContext record {
 
 # The JSON:API resource ID
 public type TasksIdResourceAttribute record {
+    # The date
     string date?;
+    # The timestamp (epoch seconds)
     int:Signed32 timestamp?;
 };
 

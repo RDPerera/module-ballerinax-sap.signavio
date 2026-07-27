@@ -38,8 +38,8 @@ service / on ep0 {
     # Deletes a dictionary entry.
     #
     # + id - The ID of the dictionary entry to delete
-    # + X\-Signavio\-ID - (authtoken)
-    # + Cookie - JSESSIONID=(jsessionid); LBROUTEID=(lbrouteid)
+    # + xSignavioID - The Process Manager workspace session token
+    # + cookie - The Process Manager workspace session cookie
     # + return - returns can be any of following types
     # http:Ok (OK)
     # http:Unauthorized (Unauthorized. Authentication failed due to incorrect credentials.  Please re-check the credentials provided or the `x-signavio-id` token.)
