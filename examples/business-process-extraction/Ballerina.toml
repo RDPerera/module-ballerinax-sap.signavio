@@ -10,5 +10,4 @@ observabilityIncluded = true
 [[dependency]]
 org = "ballerinax"
 name = "sap.signavio"
-version = "0.1.0"
-repository = "local"
+version = "1.0.0"

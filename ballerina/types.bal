@@ -53,9 +53,12 @@ public type UpdateDictionaryCategoryHeaders record {
     string contentType = "application/x-www-form-urlencoded";
 };
 
+# Represents the cases creator resource attribute.
 public type CasesCreatorResourceAttribute UsersResourceReference;
 
+# Represents the files resource references response schema.
 public type FilesResourceReferencesResponseSchema record {
+    # The data
     FilesResourceReference[] data?;
 };
 
@@ -71,6 +74,7 @@ public type Success record {
     SuccessIncluded[] included?;
 };
 
+# Represents the users resource reference.
 public type UsersResourceReference record {
     # The JSON:API resource ID
     UsersIdResourceAttribute id;
@@ -78,8 +82,10 @@ public type UsersResourceReference record {
     "Users" 'type;
 };
 
+# Represents the groups users resource attribute.
 public type GroupsUsersResourceAttribute UsersResourceReference[]?;
 
+# Represents the token request.
 public type TokenRequest record {
     # Authenticating user's password
     string password;
@@ -91,8 +97,11 @@ public type TokenRequest record {
     string tenant?;
 };
 
+# Represents the dictionary entry update request.
 public type DictionaryEntryUpdateRequest record {
+    # The attachments
     Spmv1glossaryAttachments[] attachments?;
+    # The meta data values
     record {} metaDataValues?;
     # A description of the entry
     string description?;
@@ -111,6 +120,7 @@ public type ListGroupUsersHeaders record {
     "application/vnd.api+json"|"application/json" contentType = "application/vnd.api+json";
 };
 
+# Represents the value driver.
 public type ValueDriver "IT_CAPACITY_PLANNING"|"IMPROVE_DEMAND_FORECAST_ACCURACY"|"IMPROVE_ON_TIME_DELIVERY"|"IMPROVE_FTE_PRODUCTIVITY"|"IMPROVE_USER_COMPLIANCE"|"INCREASE_CASH_FORECAST_ACCURACY"|"INCREASE_DAYS_PAYABLES"|"INCREASE_EFFECTIVENESS_MARKETING"|"OPERATIONAL_EXCELLENCE"|"REDUCE_HR_MANUAL_TRANSACTION"|"REDUCE_ASSET_COST"|"REDUCE_CUSTOMER_CHURN"|"REDUCE_DATA_MANAGEMENT_COST"|"REDUCE_DAYS_IN_INVENTORY"|"REDUCE_DAYS_SALES"|"REDUCE_DAYS_CLOSE_ANNUAL_BOOKS"|"REDUCE_FINANCE_COST"|"REDUCE_MANUFACTURING_CYCLE_TIME"|"REDUCE_READING_TO_INVOICE_TIME"|"REDUCE_NON_COMPLIANT_SERVICES"|"REDUCE_SUPPLY_CHAIN_PLANNING_COST"|"REDUCE_REVENUE_LOSS"|"REDUCE_SALES_COSTS"|"REDUCE_SERVICE_SUPPORT_COST"|"REDUCE_TIME_TO_FILL"|"REDUCE_TIME_TO_MARKET"|"REDUCE_LOGISTICS_COST"|"REDUCE_MANUFACTURING_COSTS"|"REDUCE_UNPLANNED_DOWNTIME"|"REDUCE_UNCOLLECTIBLE_ACCOUNTS"|"REDUCE_EMISSIONS_COST"|"REDUCE_WASTE_GENERATION_COST"|"REDUCE_COMPLIANCE_AND_RISK_MANAGEMENT_COST"|"INCREASE_BUSINESS_PROCESS_HARMONIZATION"|"INCREASE_ADHERENCE_TO_STANDARDIZED_SAP_BUSINESS_PROCESSES";
 
 // >>> MANUALLY MAINTAINED - NOT REGENERATED. `Credentials` and `ConnectionConfig` are hand-written
@@ -181,12 +191,18 @@ public type ConnectionConfig record {|
 |};
 // <<< END MANUALLY MAINTAINED block (Credentials / ConnectionConfig) >>>
 
+# Represents the users name resource attribute.
 public type UsersNameResourceAttribute string?;
 
+# Represents the status.
 public type Status record {
+    # The deleted
     boolean deleted?;
+    # The approve
     boolean approve?;
+    # The publish
     boolean publish?;
+    # The unique identifier
     string id?;
 };
 
@@ -197,13 +213,16 @@ public type ListCaseTasksHeaders record {
     "application/vnd.api+json"|"application/json" contentType = "application/vnd.api+json";
 };
 
+# Represents the initiative type.
 public type InitiativeType "STANDARD"|"PINT_MANAGED";
 
+# Represents the bpmn import result.
 public type BpmnImportResult record {
     # The number of updated models
     int numUpdated?;
     # The IDs of the created models
     string[] createdIds?;
+    # The warnings
     Messages warnings?;
     # The ID of the main model
     string mainModelId?;
@@ -211,23 +230,35 @@ public type BpmnImportResult record {
     int numCreated?;
     # The IDs of the updated models
     string[] updatedIds?;
+    # The list of errors
     Messages errors?;
 };
 
+# Represents the case variables resource response schema.
 public type CaseVariablesResourceResponseSchema record {
     *Success;
+    # The data
     CaseVariablesResourceSchema data;
 };
 
+# Represents the ces measurement.
 public type CesMeasurement record {
     *Measurement;
+    # The num difficult
     int:Signed32 numDifficult;
+    # The num very difficult
     int:Signed32 numVeryDifficult?;
+    # The num bit easy
     int:Signed32 numBitEasy?;
+    # The scale
     "ONE_TO_THREE"|"ONE_TO_FIVE"|"ONE_TO_SEVEN" scale;
+    # The num very easy
     int:Signed32 numVeryEasy?;
+    # The num neutral
     int:Signed32 numNeutral;
+    # The num easy
     int:Signed32 numEasy;
+    # The num bit difficult
     int:Signed32 numBitDifficult?;
 };
 
@@ -250,23 +281,32 @@ public type ListModelRevisionsQueries record {
     int:Signed32 'limit?;
 };
 
+# Represents the directory id.
 @constraint:String {pattern: re `^[0-9a-fA-F]{32}$`}
 public type DirectoryId string;
 
+# Represents the incoming insight assignees items string.
 @constraint:String {pattern: re `[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}`}
 public type IncomingInsightAssigneesItemsString string;
 
+# Represents the cases resources response schema.
 public type CasesResourcesResponseSchema record {
     *Success;
+    # The data
     CasesResourceSchema[] data;
 };
 
+# Represents the model resource response.
 public type ModelResourceResponse record {
+    # The relation type
     string rel?;
+    # The hypermedia link
     string href?;
+    # The representation payload
     ModelRepresentation rep?;
 };
 
+# Represents the tasks due resource attribute.
 public type TasksDueResourceAttribute int?;
 
 # Represents the Queries record for the operation: getCase
@@ -277,42 +317,66 @@ public type GetCaseQueries record {
     string 'field = "id,creator";
 };
 
+# Represents the authorization type.
 public type AuthorizationType "USER"|"GROUP";
 
 # Represents the Headers record for the operation: getDictionaryEntry
 public type GetDictionaryEntryHeaders record {
 };
 
+# Represents the users resource response schema.
 public type UsersResourceResponseSchema record {
     *Success;
+    # The data
     UsersResourceSchema data;
 };
 
+# Represents the insights value driver.
 public type InsightsValueDriver "IT_CAPACITY_PLANNING"|"IMPROVE_DEMAND_FORECAST_ACCURACY"|"IMPROVE_ON_TIME_DELIVERY"|"IMPROVE_FTE_PRODUCTIVITY"|"IMPROVE_USER_COMPLIANCE"|"INCREASE_CASH_FORECAST_ACCURACY"|"INCREASE_DAYS_PAYABLES"|"INCREASE_EFFECTIVENESS_MARKETING"|"OPERATIONAL_EXCELLENCE"|"REDUCE_HR_MANUAL_TRANSACTION"|"REDUCE_ASSET_COST"|"REDUCE_CUSTOMER_CHURN"|"REDUCE_DATA_MANAGEMENT_COST"|"REDUCE_DAYS_IN_INVENTORY"|"REDUCE_DAYS_SALES"|"REDUCE_DAYS_CLOSE_ANNUAL_BOOKS"|"REDUCE_FINANCE_COST"|"REDUCE_MANUFACTURING_CYCLE_TIME"|"REDUCE_READING_TO_INVOICE_TIME"|"REDUCE_NON_COMPLIANT_SERVICES"|"REDUCE_SUPPLY_CHAIN_PLANNING_COST"|"REDUCE_REVENUE_LOSS"|"REDUCE_SALES_COSTS"|"REDUCE_SERVICE_SUPPORT_COST"|"REDUCE_TIME_TO_FILL"|"REDUCE_TIME_TO_MARKET"|"REDUCE_LOGISTICS_COST"|"REDUCE_MANUFACTURING_COSTS"|"REDUCE_UNPLANNED_DOWNTIME"|"REDUCE_UNCOLLECTIBLE_ACCOUNTS";
 
+# Represents the cases resource attributes.
 public type CasesResourceAttributes record {
+    # The attributes
     CasesResourceAttributesAttributes attributes?;
 };
 
+# Represents the model info request.
 public type ModelInfoRequest record {
+    # The parent
     string parent?;
+    # The formats
     record {} formats?;
+    # The granted revision user
     @jsondata:Name {value: "granted_revision_user"}
     string grantedRevisionUser?;
+    # The created
     string created?;
+    # The author
     string author?;
+    # The is licensed stencil set
     boolean isLicensedStencilSet?;
+    # The granted revision user name
     @jsondata:Name {value: "granted_revision_user_name"}
     string grantedRevisionUserName?;
+    # The description
     string description?;
+    # The type
     string 'type?;
+    # The author company
     string authorCompany?;
+    # The revision
     string revision?;
+    # The parent name
     string parentName?;
+    # The author name
     string authorName?;
+    # The is deployed
     boolean isDeployed?;
+    # The name
     string name?;
+    # The updated
     string updated?;
+    # The status
     V1modelmodelIdinfoStatus status?;
 };
 
@@ -323,27 +387,40 @@ public type GetGroupHeaders record {
     "application/vnd.api+json"|"application/json" contentType = "application/vnd.api+json";
 };
 
+# Represents the model response.
 public type ModelResponse record {
+    # The relation type
     string rel?;
+    # The hypermedia link
     string href?;
+    # The representation payload
     Rep rep?;
 };
 
+# Represents the diagram json child shape.
 public type DiagramJsonChildShape record {
+    # The resource id
     string resourceId?;
+    # The properties
     record {} properties?;
 };
 
+# Represents the NPS measurement.
 public type NPSMeasurement record {
     *Measurement;
+    # The detractors
     int:Signed32 detractors;
+    # The promoters
     int:Signed32 promoters;
+    # The passives
     int:Signed32 passives;
 };
 
+# Represents the object reference.
 @constraint:String {pattern: re `^/[^/]+/[0-9a-fA-F]{32}$`}
 public type ObjectReference string;
 
+# Represents the groups resource reference.
 public type GroupsResourceReference record {
     # The JSON:API resource ID
     GroupsIdResourceAttribute id;
@@ -380,6 +457,7 @@ public type ListCasesQueries record {
 public type GetDictionaryCategoryHeaders record {
 };
 
+# Represents the cases application link resource attribute.
 public type CasesApplicationLinkResourceAttribute string?;
 
 # Represents the Headers record for the operation: listTasks
@@ -389,25 +467,35 @@ public type ListTasksHeaders record {
     "application/vnd.api+json"|"application/json" contentType = "application/vnd.api+json";
 };
 
+# Represents the delete directory response.
 public type DeleteDirectoryResponse record {
+    # The success
     boolean success?;
 };
 
+# Represents the objectives response.
 public type ObjectivesResponse record {
+    # The count
     int count?;
+    # The value
     Objective[] value?;
 };
 
+# Represents the files resources response schema.
 public type FilesResourcesResponseSchema record {
     *Success;
+    # The data
     FilesResourceSchema[] data;
 };
 
+# Represents the tasks resources response schema.
 public type TasksResourcesResponseSchema record {
     *Success;
+    # The data
     TasksResourceSchema[] data;
 };
 
+# Represents the ingestion data request.
 public type IngestionDataRequest record {
     # A Schema is represented in JSON following Apache Avro Specification of type record to define the table structure
     string schema;
@@ -421,15 +509,22 @@ public type IngestionDataRequest record {
     record {byte[] fileContent; string fileName;}[] files;
 };
 
+# Represents the incoming insight initiatives items string.
 @constraint:String {pattern: re `[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}`}
 public type IncomingInsightInitiativesItemsString string;
 
+# Represents the csat measurement.
 public type CsatMeasurement record {
     *Measurement;
+    # The num dissatisfied
     int:Signed32 numDissatisfied;
+    # The num highly satisfied
     int:Signed32 numHighlySatisfied;
+    # The num highly dissatisfied
     int:Signed32 numHighlyDissatisfied;
+    # The num satisfied
     int:Signed32 numSatisfied;
+    # The num neutral
     int:Signed32 numNeutral;
 };
 
@@ -441,53 +536,85 @@ public type ListCaseVariableCasesQueries record {
     string 'field = "id,creator";
 };
 
+# Represents the groups resource response schema.
 public type GroupsResourceResponseSchema record {
     *Success;
+    # The data
     GroupsResourceSchema data;
 };
 
+# Represents the rep.
 public type Rep record {
+    # The parent
     string parent?;
+    # The formats
     record {} formats?;
+    # The granted revision user
     @jsondata:Name {value: "granted_revision_user"}
     string grantedRevisionUser?;
+    # The is licensed stencil set
     boolean isLicensedStencilSet?;
+    # The granted revision user name
     @jsondata:Name {value: "granted_revision_user_name"}
     string grantedRevisionUserName?;
+    # The description
     string description?;
+    # The type
     string 'type?;
+    # The sri revision
     @jsondata:Name {value: "sri_revision"}
     string sriRevision?;
+    # The sri path
     @jsondata:Name {value: "sri_path"}
     string sriPath?;
+    # The is deployed
     boolean isDeployed?;
+    # The granted revision
     @jsondata:Name {value: "granted_revision"}
     string grantedRevision?;
+    # The rev
     int rev?;
+    # The created
     string created?;
+    # The author
     string author?;
+    # The granted revision date
     @jsondata:Name {value: "granted_revision_date"}
     string grantedRevisionDate?;
+    # The sri
     string sri?;
+    # The author company
     string authorCompany?;
+    # The revision
     string revision?;
+    # The parent name
     string parentName?;
+    # The deleted
     boolean deleted?;
+    # The author name
     string authorName?;
+    # The name
     string name?;
+    # The namespace
     string namespace?;
+    # The comment
     string comment?;
+    # The updated
     string updated?;
+    # The status
     Status status?;
 };
 
+# Represents the cases tasks resource attribute.
 public type CasesTasksResourceAttribute TasksResourceReference[]?;
 
 # Represents the Headers record for the operation: deleteDictionaryCategory
 public type DeleteDictionaryCategoryHeaders record {
 };
 
+# Represents the users resource attributes.
 public type UsersResourceAttributes record {
+    # The attributes
     UsersResourceAttributesAttributes attributes?;
 };
 
@@ -523,9 +650,12 @@ public type ListCaseVariablesQueries record {
     string filterId;
 };
 
+# Represents the case variables values resource attribute.
 public type CaseVariablesValuesResourceAttribute record {}[]?;
 
+# Represents the groups resource references response schema.
 public type GroupsResourceReferencesResponseSchema record {
+    # The data
     GroupsResourceReference[] data?;
 };
 
@@ -559,56 +689,92 @@ public type ListTasksQueries record {
     string filterId?;
 };
 
+# Represents the syntax check representation.
 public type SyntaxCheckRepresentation record {
+    # The should
     record {} should?;
+    # The must
     record {|string[]...;|} must?;
+    # The guideline id
     string guidelineId?;
 };
 
+# Represents the groups resource schema.
 public type GroupsResourceSchema record {
     *GroupsResourceReference;
     *GroupsResourceAttributes;
+    # The attributes
     GroupsResourceAttributesAttributes attributes;
+    # The relationships
     record {} relationships?;
+    # The links
     record {} links?;
 };
 
+# Represents the insight.
 public type Insight record {
+    # The updated by
     UserInfo updatedBy;
+    # The value drivers
     @constraint:Array {maxLength: 100}
     InsightsValueDriver[] valueDrivers;
+    # The authorizations
     @constraint:Array {maxLength: 100}
     Authorization[] authorizations;
+    # The description
     string description?;
+    # The assignees
     @constraint:Array {maxLength: 100}
     UserInfo[] assignees;
+    # The sri
     string sri;
+    # The date updated
     OffsetDateTime dateUpdated;
+    # The tags
     Tag[] tags;
+    # The date created
     OffsetDateTime dateCreated;
+    # The created by
     UserInfo createdBy;
+    # The discoveries
     DiscoveryReference[] discoveries;
+    # The name
     string name;
+    # The priority score
     float priorityScore;
+    # The initiatives
     InsightInitiativesItemsString[] initiatives?;
+    # The unique identifier
     UUID id;
+    # The effort score
     float effortScore;
+    # The impact score
     float impactScore;
+    # The status
     InsightStatus status;
 };
 
+# Represents the incoming initiative.
 public type IncomingInitiative record {
+    # The end date
     OffsetDateTime endDate?;
+    # The name
     string name;
+    # The value drivers
     @constraint:Array {maxLength: 100}
     ValueDriver[] valueDrivers;
+    # The authorizations
     @constraint:Array {maxLength: 100, minLength: 1}
     IncomingAuthorization[] authorizations;
+    # The description
     string description?;
+    # The start date
     OffsetDateTime startDate?;
+    # The status
     InitiativeStatus status;
 };
 
+# Represents the bpmn import request.
 public type BpmnImportRequest record {
     # The filename and content of the BPMN 2.0 XML file
     @jsondata:Name {value: "bpmn2_0file"}
@@ -619,11 +785,15 @@ public type BpmnImportRequest record {
     string directory?;
 };
 
+# Represents the cases process id resource attribute.
 public type CasesProcessIdResourceAttribute record {
+    # The date
     string date?;
+    # The timestamp (epoch seconds)
     int:Signed32 timestamp?;
 };
 
+# Represents the tasks resource reference.
 public type TasksResourceReference record {
     # The JSON:API resource ID
     TasksIdResourceAttribute id;
@@ -631,73 +801,120 @@ public type TasksResourceReference record {
     "Tasks" 'type;
 };
 
+# Represents the users resource references response schema.
 public type UsersResourceReferencesResponseSchema record {
+    # The data
     UsersResourceReference[] data?;
 };
 
+# Represents the benchmarking analytics context.
 public type BenchmarkingAnalyticsContext record {
+    # The metric benchmark container id
     @constraint:String {maxLength: 150}
     string metricBenchmarkContainerId?;
+    # The e2e process id
     @constraint:String {maxLength: 100}
     string e2eProcessId?;
 };
 
+# Represents the files resource schema.
 public type FilesResourceSchema record {
     *FilesResourceReference;
     *FilesResourceAttributes;
+    # The attributes
     FilesResourceAttributesAttributes attributes;
+    # The relationships
     record {} relationships?;
+    # The links
     record {} links?;
 };
 
+# Represents the user info user group ids items string.
 @constraint:String {pattern: re `[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}`}
 public type UserInfoUserGroupIdsItemsString string;
 
+# Represents the representation.
 public type Representation record {
+    # The formats
     record {} formats?;
+    # The attachments
     anydata[] attachments?;
+    # The color
     string color?;
+    # The hidden
     boolean hidden?;
+    # The granted revision user
     @jsondata:Name {value: "granted_revision_user"}
     string grantedRevisionUser?;
+    # The workflow sync up to date
     boolean workflowSyncUpToDate?;
     # Array of prefixed IDs of categories that have this category  as parent category
     string publishingMode?;
+    # The granted revision user name
     @jsondata:Name {value: "granted_revision_user_name"}
     string grantedRevisionUserName?;
+    # The linked count
     int linkedCount?;
+    # The description
     string description?;
+    # The language
     string language?;
+    # The child categories
     string[] childCategories?;
+    # The occurrence
     int occurrence?;
+    # The replaced item ids
     string[] replacedItemIds?;
+    # The title
     string title?;
+    # The child category count
     int childCategoryCount?;
+    # The type
     string 'type?;
+    # The category name
     string categoryName?;
+    # The head revision num
     int headRevisionNum?;
+    # The linked by count
     int linkedByCount?;
+    # The meta data values
     record {} metaDataValues?;
+    # The is enabled for dimensions
     boolean isEnabledForDimensions?;
+    # The unique identifier
     string id?;
+    # The has attachments
     boolean hasAttachments?;
     # ID of the workspaces's Dictionary (not relevant for API access)
     string glossaryId?;
+    # The order
     int 'order?;
+    # The head revision
     string headRevision?;
+    # The granted revision
     @jsondata:Name {value: "granted_revision"}
     string grantedRevision?;
+    # The granted revision number
     @jsondata:Name {value: "granted_revision_number"}
     int grantedRevisionNumber?;
+    # The decision input
     boolean decisionInput?;
+    # The is dimension
     boolean isDimension?;
+    # The author
     string author?;
+    # The granted revision date
     @jsondata:Name {value: "granted_revision_date"}
     string grantedRevisionDate?;
+    # The author company
     string authorCompany?;
+    # The item count
     int itemCount?;
+    # The is standard
     boolean isStandard?;
+    # The workflow sync enabled
     boolean workflowSyncEnabled?;
+    # The name
     string name?;
     # If the category corresponds to one of the six standard  categories, this field is set. For example, some reports  consider the content of these categories. The following  `oldCategories` exist:
     # 
@@ -708,13 +925,21 @@ public type Representation record {
     #   * `IT_SYSTEM` - IT systems
     #   * `NONE` - Everything else
     string oldCategory?;
+    # The parent category
     string parentCategory?;
+    # The comment
     string comment?;
+    # The decision data object key
     string decisionDataObjectKey?;
+    # The category
     string category?;
+    # The items
     anydata[] items?;
+    # The updated
     string updated?;
+    # The sending interval
     string sendingInterval?;
+    # The linking published models update mode
     string linkingPublishedModelsUpdateMode?;
 };
 
@@ -726,28 +951,40 @@ public type CaseVariablesIdResourceAttribute record {
     string id?;
 };
 
+# Represents the diagram json.
 public type DiagramJson record {
+    # The resource id
     string resourceId?;
+    # The properties
     record {} properties?;
+    # The child shapes
     DiagramJsonChildShape[] childShapes?;
 };
 
+# Represents the role.
 public type Role "OWNER"|"EDITOR"|"VIEWER";
 
+# Represents the dictionary response.
 public type DictionaryResponse record {
+    # The relation type
     string rel;
+    # The hypermedia link
     string href;
     // Shape varies by `rel`: a `Representation`-like object for `gitem`/`cat`/`info`, an array
     // for relation-only entries like `priv`, and further nested hypermedia objects for
     // `parents` - `json` is used rather than a narrower union to accept all of these.
+    # The representation payload
     json rep;
 };
 
+# Represents the users resources response schema.
 public type UsersResourcesResponseSchema record {
     *Success;
+    # The data
     UsersResourceSchema[] data;
 };
 
+# Represents the offset date time.
 public type OffsetDateTime string;
 
 # Represents the Headers record for the operation: getCase
@@ -757,14 +994,23 @@ public type GetCaseHeaders record {
     "application/vnd.api+json"|"application/json" contentType = "application/vnd.api+json";
 };
 
+# Represents the tasks resource attributes attributes.
 public type TasksResourceAttributesAttributes record {
+    # The due
     TasksDueResourceAttribute? due?;
+    # The created
     TasksCreatedResourceAttribute? created?;
+    # The name
     TasksNameResourceAttribute? name?;
+    # The assignee
     TasksAssigneeResourceAttribute? assignee?;
+    # The completed
     TasksCompletedResourceAttribute? completed?;
+    # The updated
     TasksUpdatedResourceAttribute? updated?;
+    # The case
     TasksCaseResourceAttribute case?;
+    # The application link
     TasksApplicationLinkResourceAttribute? applicationLink?;
 };
 
@@ -776,17 +1022,26 @@ public type GetTaskQueries record {
     string fields = "id";
 };
 
+# Represents the cases closed resource attribute.
 public type CasesClosedResourceAttribute int?;
 
+# Represents the incoming asset.
 public type IncomingAsset record {
+    # The name
     string name;
+    # The description
     string description?;
+    # The type
     AssetType 'type;
+    # The url
     string url;
 };
 
+# Represents the measurement.
 public type Measurement record {
+    # The score
     int:Signed32 score;
+    # The time
     string time;
 };
 
@@ -804,34 +1059,54 @@ public type ListGroupsHeaders record {
     "application/vnd.api+json"|"application/json" contentType = "application/vnd.api+json";
 };
 
+# Represents the users resource schema.
 public type UsersResourceSchema record {
     *UsersResourceReference;
     *UsersResourceAttributes;
+    # The attributes
     UsersResourceAttributesAttributes attributes;
+    # The relationships
     record {} relationships?;
+    # The links
     record {} links?;
 };
 
+# Represents the initiative summary for objective.
 public type InitiativeSummaryForObjective record {
+    # The updated by
     UserInfo updatedBy?;
+    # The end date
     OffsetDateTime endDate?;
+    # The value drivers
     @constraint:Array {maxLength: 100}
     ValueDriver[] valueDrivers;
+    # The authorizations
     @constraint:Array {maxLength: 100}
     Authorization[] authorizations;
+    # The description
     string description?;
+    # The type
     InitiativeType 'type;
+    # The sid
     @constraint:String {pattern: re `^SuiteInitiative_[0-9a-fA-F]{32}$`}
     string sid;
+    # The date updated
     OffsetDateTime dateUpdated;
+    # The date created
     OffsetDateTime dateCreated;
+    # The created by
     UserInfo createdBy;
+    # The name
     string name;
+    # The last activity
     OffsetDateTime lastActivity;
+    # The start date
     OffsetDateTime startDate?;
+    # The status
     InitiativeStatus status;
 };
 
+# Represents the process intelligence canvas type.
 public type ProcessIntelligenceCanvasType "INVESTIGATION"|"DASHBOARD";
 
 # Represents the Queries record for the operation: listObjectives
@@ -847,20 +1122,31 @@ public type ListObjectivesQueries record {
     boolean dollarCount = false;
 };
 
+# Represents the user info.
 public type UserInfo record {
+    # The first name
     string firstName?;
+    # The last name
     string lastName?;
+    # The display name
     string displayName?;
+    # The unique identifier
     UUID id;
+    # The user group ids
     UserInfoUserGroupIdsItemsString[] userGroupIds;
+    # The email
     string email?;
 };
 
+# Represents the tasks assignee resource attribute.
 public type TasksAssigneeResourceAttribute record {
+    # The name
     string name?;
+    # The email
     string email?;
 };
 
+# Represents the case variables resource reference.
 public type CaseVariablesResourceReference record {
     # The JSON:API resource ID
     CaseVariablesIdResourceAttribute id;
@@ -868,8 +1154,10 @@ public type CaseVariablesResourceReference record {
     "Case-variables" 'type;
 };
 
+# Represents the case variables resources response schema.
 public type CaseVariablesResourcesResponseSchema record {
     *Success;
+    # The data
     CaseVariablesResourceSchema[] data;
 };
 
@@ -884,43 +1172,70 @@ public type ListCaseVariablesHeaders record {
 public type ListDictionaryCategoriesHeaders record {
 };
 
+# Represents the cases resource references response schema.
 public type CasesResourceReferencesResponseSchema record {
+    # The data
     CasesResourceReference[] data?;
 };
 
+# Represents the spmv1glossary attachments.
 public type Spmv1glossaryAttachments record {
+    # The label
     string label?;
+    # The url
     string url?;
 };
 
+# Represents the json api.
 public type JsonApi record {|
+    # The version
     string version?;
 |};
 
+# Represents the create directory request.
 public type CreateDirectoryRequest record {
+    # The parent
     ObjectReference parent?;
+    # The name
     string name?;
 };
 
+# Represents the initiative.
 public type Initiative record {
+    # The updated by
     UserInfo updatedBy;
+    # The end date
     OffsetDateTime endDate?;
+    # The value drivers
     @constraint:Array {maxLength: 100}
     ValueDriver[] valueDrivers;
+    # The authorizations
     Authorization[] authorizations;
+    # The description
     string description?;
+    # The sri
     string sri;
+    # The type
     InitiativeType 'type;
+    # The date updated
     OffsetDateTime dateUpdated;
+    # The date created
     OffsetDateTime dateCreated;
+    # The created by
     UserInfo createdBy;
+    # The name
     string name;
+    # The last activity
     OffsetDateTime lastActivity;
+    # The unique identifier
     UUID id;
+    # The start date
     OffsetDateTime startDate?;
+    # The status
     InitiativeStatus status;
 };
 
+# Represents the cases case number resource attribute.
 public type CasesCaseNumberResourceAttribute int:Signed32?;
 
 # Represents the Queries record for the operation: queryEntitySet
@@ -969,6 +1284,7 @@ public type QueryEntitySetQueries record {
     string[] dollarSelect;
 };
 
+# Represents the tasks case resource attribute.
 public type TasksCaseResourceAttribute CasesResourceReference;
 
 # Represents the Headers record for the operation: getCaseCreator
@@ -985,6 +1301,7 @@ public type ListCaseVariableCasesHeaders record {
     "application/vnd.api+json"|"application/json" contentType = "application/vnd.api+json";
 };
 
+# Represents the files resource reference.
 public type FilesResourceReference record {
     # The JSON:API resource ID
     FilesIdResourceAttribute id;
@@ -992,6 +1309,7 @@ public type FilesResourceReference record {
     "Files" 'type;
 };
 
+# Represents the meta info request.
 public type MetaInfoRequest record {
     # JSON string representing stencilset bindings
     string stencilsetBindings;
@@ -1036,6 +1354,7 @@ public type ListUsersQueries record {
     string filterId?;
 };
 
+# Represents the case variables case resource attribute.
 public type CaseVariablesCaseResourceAttribute CasesResourceReference;
 
 # Represents the Headers record for the operation: listUsers
@@ -1045,24 +1364,39 @@ public type ListUsersHeaders record {
     "application/vnd.api+json"|"application/json" contentType = "application/vnd.api+json";
 };
 
+# Represents the v1modelmodel idrevisions rep.
 public type V1modelmodelIdrevisionsRep record {
+    # The rev
     int rev?;
+    # The size
     int size?;
+    # The author
     string author?;
+    # The author name
     string authorName?;
+    # The created
     string created?;
+    # The is deployed
     boolean isDeployed?;
+    # The comment
     string comment?;
+    # The author company
     string authorCompany?;
+    # The status
     string status?;
 };
 
+# Represents the model revisions response.
 public type ModelRevisionsResponse record {
+    # The relation type
     string rel?;
+    # The hypermedia link
     string href?;
+    # The representation payload
     V1modelmodelIdrevisionsRep rep?;
 };
 
+# Represents the cases priority resource attribute.
 public type CasesPriorityResourceAttribute int:Signed32?;
 
 # Represents the Headers record for the operation: listDictionaryEntries
@@ -1072,25 +1406,39 @@ public type ListDictionaryEntriesHeaders record {
     string contentType = "application/x-www-form-urlencoded";
 };
 
+# Represents the insight initiatives items string.
 @constraint:String {pattern: re `[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}`}
 public type InsightInitiativesItemsString string;
 
+# Represents the model representation.
 public type ModelRepresentation record {
+    # The allowed mime type regex
     string allowedMimeTypeRegex?;
+    # The deleted
     boolean deleted?;
+    # The visible
     boolean visible?;
+    # The created
     string created?;
+    # The name
     string name?;
+    # The description
     string description?;
+    # The type
     string 'type?;
+    # The sending interval
     string sendingInterval?;
+    # The name en
     @jsondata:Name {value: "name_en"}
     string nameEn?;
 };
 
+# Represents the cases milestone resource attribute.
 public type CasesMilestoneResourceAttribute string?;
 
+# Represents the case variables resource attributes.
 public type CaseVariablesResourceAttributes record {
+    # The attributes
     CaseVariablesResourceAttributesAttributes attributes?;
 };
 
@@ -1119,17 +1467,28 @@ public type UsersIdResourceAttribute record {
     int:Signed32 timestamp?;
 };
 
+# Represents the asset.
 public type Asset record {
+    # The initiative
     Initiative initiative;
+    # The updated by
     UserInfo updatedBy?;
+    # The date created
     OffsetDateTime dateCreated;
+    # The created by
     UserInfo createdBy;
+    # The name
     @constraint:String {pattern: re `\S`}
     string name;
+    # The description
     string description?;
+    # The unique identifier
     UUID id;
+    # The type
     AssetType 'type;
+    # The url
     string url;
+    # The date updated
     OffsetDateTime dateUpdated;
 };
 
@@ -1140,31 +1499,48 @@ public type UpdateModelQueries record {
     string dc?;
 };
 
+# Represents the case variables id resource attribute caze id.
 public type CaseVariablesIdResourceAttributeCazeId record {
+    # The date
     string date?;
+    # The timestamp (epoch seconds)
     int:Signed32 timestamp?;
 };
 
+# Represents the dmn download link response.
 public type DmnDownloadLinkResponse record {
+    # The relation type
     string rel?;
+    # The hypermedia link
     string href?;
+    # The representation payload
     DmnDownloadRepresentation rep?;
 };
 
+# Represents the success response.
 public type SuccessResponse record {
+    # The success
     boolean success?;
 };
 
+# Represents the cases resource reference response schema.
 public type CasesResourceReferenceResponseSchema record {
+    # The data
     CasesResourceReference data?;
 };
 
+# Represents the messages.
 public type Messages MessagesInner[];
 
+# Represents the v1modelmodel idinfo status.
 public type V1modelmodelIdinfoStatus record {
+    # The deleted
     boolean deleted?;
+    # The approve
     boolean approve?;
+    # The publish
     boolean publish?;
+    # The unique identifier
     string id?;
 };
 
@@ -1175,28 +1551,46 @@ public type GetTaskHeaders record {
     "application/vnd.api+json"|"application/json" contentType = "application/vnd.api+json";
 };
 
+# Represents the users email resource attribute.
 public type UsersEmailResourceAttribute string?;
 
+# Represents the meta response item rep.
 public type MetaResponseItemRep record {
+    # The glossary bindings
     record {}[] glossaryBindings?;
+    # The line wrap
     boolean lineWrap?;
+    # The default value
     string defaultValue?;
+    # The length
     int length?;
+    # The description
     string description?;
+    # The is glossary definition
     boolean isGlossaryDefinition?;
+    # The name en gb
     @jsondata:Name {value: "name_en_gb"}
     string nameEnGb?;
+    # The type
     string 'type?;
+    # The is list
     boolean isList?;
+    # The multilanguage
     boolean multilanguage?;
+    # The stencilset bindings
     StencilsetBinding[] stencilsetBindings?;
+    # The name de de
     @jsondata:Name {value: "name_de_de"}
     string nameDeDe?;
+    # The readonly
     boolean 'readonly?;
+    # The name
     string name?;
+    # The unique identifier
     string id?;
 };
 
+# Represents the files name resource attribute.
 public type FilesNameResourceAttribute string?;
 
 # Represents the Queries record for the operation: getUser
@@ -1205,12 +1599,17 @@ public type GetUserQueries record {
     string fields = "id,name,email";
 };
 
+# Represents the dmn download representation.
 public type DmnDownloadRepresentation record {
+    # The success
     boolean success?;
+    # The download url
     string downloadUrl?;
+    # The messages
     string[] messages?;
 };
 
+# Represents the cases resource reference.
 public type CasesResourceReference record {
     # The JSON:API resource ID
     CasesIdResourceAttribute id;
@@ -1235,8 +1634,11 @@ public type OdataOutput record {
     anydata[] value;
 };
 
+# Represents the groups resource attributes attributes.
 public type GroupsResourceAttributesAttributes record {
+    # The name
     GroupsNameResourceAttribute? name?;
+    # The users
     GroupsUsersResourceAttribute? users?;
 };
 
@@ -1248,6 +1650,7 @@ public type GetRevisionBpmnXmlQueries record {
     string language?;
 };
 
+# Represents the messages inner.
 public type MessagesInner record {
     # Additional details for this message
     record {}[] details?;
@@ -1262,11 +1665,14 @@ public type ListCaseVariableCaseRefsHeaders record {
     "application/vnd.api+json"|"application/json" contentType = "application/vnd.api+json";
 };
 
+# Represents the tasks resource response schema.
 public type TasksResourceResponseSchema record {
     *Success;
+    # The data
     TasksResourceSchema data;
 };
 
+# Represents the groups name resource attribute.
 public type GroupsNameResourceAttribute string?;
 
 # Represents the Queries record for the operation: listDictionaryEntries
@@ -1293,9 +1699,13 @@ public type DeleteDictionaryCategoryQueries record {
     boolean moveContent;
 };
 
+# Represents the authorization.
 public type Authorization record {
+    # The role
     Role role;
+    # The target type
     AuthorizationType targetType;
+    # The target
     AuthorizationTargetInfo target;
 };
 
@@ -1311,19 +1721,27 @@ public type ServiceDocumentEntity record {
     string url;
 };
 
+# Represents the tasks application link resource attribute.
 public type TasksApplicationLinkResourceAttribute string?;
 
+# Represents the hyper media object.
 public type HyperMediaObject record {
+    # The relation type
     string rel?;
+    # The hypermedia link
     string href?;
     // The real API returns an object shape for `dir`/`mod`/`glos` entries, but an
     // array (or empty array) for hypermedia-relation entries like `priv`/`parents`
     // - `json` is used rather than `record {}` to accept both.
+    # The representation payload
     json rep?;
 };
 
+# Represents the authorization target info.
 public type AuthorizationTargetInfo record {
+    # The display name
     string displayName?;
+    # The unique identifier
     UUID id;
 };
 
@@ -1344,6 +1762,7 @@ public type SearchQueries record {
     string fieldsJson?;
 };
 
+# Represents the cases name resource attribute.
 public type CasesNameResourceAttribute string?;
 
 # Represents the Queries record for the operation: getFile
@@ -1352,6 +1771,7 @@ public type GetFileQueries record {
     string fields = "id,name,size";
 };
 
+# Represents the tasks name resource attribute.
 public type TasksNameResourceAttribute string?;
 
 # Represents the Queries record for the operation: listInsightsInInitiative
@@ -1401,20 +1821,28 @@ public type ListInsightsInInitiativeQueries record {
     "OPEN"|"IN_PROGRESS"|"RESOLVED" status?;
 };
 
+# Represents the cases created resource attribute.
 public type CasesCreatedResourceAttribute int?;
 
+# Represents the diagram draft response.
 public type DiagramDraftResponse record {
+    # The unique identifier
     string id?;
 };
 
+# Represents the cases resource schema.
 public type CasesResourceSchema record {
     *CasesResourceReference;
     *CasesResourceAttributes;
+    # The attributes
     CasesResourceAttributesAttributes attributes;
+    # The relationships
     record {} relationships?;
+    # The links
     record {} links?;
 };
 
+# Represents the dictionary category request.
 public type DictionaryCategoryRequest record {
     # A HEX color to display with the category, for example `#800000` (dark red)
     string color;
@@ -1430,13 +1858,17 @@ public type DictionaryCategoryRequest record {
     int 'order;
 };
 
+# Represents the expiration date.
 public type ExpirationDate record {
+    # The re approval date
     @constraint:String {pattern: re `[0-9]{4}/[0-9]{2}/[0-9]{2}`}
     string reApprovalDate?;
 };
 
+# Represents the tasks completed resource attribute.
 public type TasksCompletedResourceAttribute int?;
 
+# Represents the dictionary entry request.
 public type DictionaryEntryRequest record {
     # Add a single attachment as an object. For multiple attachments, add them as an array of objects:
     # ```
@@ -1470,11 +1902,16 @@ public type DictionaryEntryRequest record {
     string category;
 };
 
+# Represents the tag.
 public type Tag record {
+    # The date created
     OffsetDateTime dateCreated;
+    # The unique identifier
     UUID id;
+    # The label
     @constraint:String {pattern: re `\S`}
     string label;
+    # The date updated
     OffsetDateTime dateUpdated;
 };
 
@@ -1528,20 +1965,31 @@ public type ListInitiativesQueries record {
     InitiativeStatus status?;
 };
 
+# Represents the incoming insight.
 public type IncomingInsight record {
+    # The name
     string name;
+    # The value drivers
     @constraint:Array {maxLength: 100}
     InsightsValueDriver[] valueDrivers;
+    # The priority score
     float priorityScore;
+    # The authorizations
     @constraint:Array {maxLength: 100, minLength: 1}
     IncomingAuthorization[] authorizations;
+    # The description
     string description?;
+    # The initiatives
     @constraint:Array {maxLength: 100}
     IncomingInsightInitiativesItemsString[] initiatives?;
+    # The assignees
     @constraint:Array {maxLength: 1}
     IncomingInsightAssigneesItemsString[] assignees;
+    # The effort score
     float effortScore;
+    # The impact score
     float impactScore;
+    # The status
     InsightStatus status;
 };
 
@@ -1549,12 +1997,17 @@ public type IncomingInsight record {
 public type GetDictionaryEntryInfoHeaders record {
 };
 
+# Represents the syntax check response.
 public type SyntaxCheckResponse record {
+    # The relation type
     string rel?;
+    # The hypermedia link
     string href?;
+    # The representation payload
     SyntaxCheckRepresentation[] rep?;
 };
 
+# Represents the files size resource attribute.
 public type FilesSizeResourceAttribute int:Signed32;
 
 # The JSON:API resource ID
@@ -1565,12 +2018,19 @@ public type GroupsIdResourceAttribute record {
     int:Signed32 timestamp?;
 };
 
+# Represents the case variables resource attributes attributes.
 public type CaseVariablesResourceAttributesAttributes record {
+    # The values
     CaseVariablesValuesResourceAttribute? values?;
+    # The name
     CaseVariablesNameResourceAttribute? name?;
+    # The default values
     CaseVariablesDefaultValuesResourceAttribute? defaultValues?;
+    # The description
     CaseVariablesDescriptionResourceAttribute? description?;
+    # The variable id
     CaseVariablesVariableIdResourceAttribute? variableId?;
+    # The case
     CaseVariablesCaseResourceAttribute case?;
 };
 
@@ -1586,9 +2046,13 @@ public type PublishData record {
     ObjectReference[] models;
 };
 
+# Represents the stencilset binding.
 public type StencilsetBinding record {
+    # The namespace
     string namespace?;
+    # The stencil
     string stencil?;
+    # The order
     int 'order?;
 };
 
@@ -1600,7 +2064,9 @@ public type RenameDirectoryData record {
     string description;
 };
 
+# Represents the model request.
 public type ModelRequest record {
+    # The json xml
     @jsondata:Name {value: "json_xml"}
     string jsonXml?;
 };
@@ -1612,10 +2078,13 @@ public type ListGroupUserRefsHeaders record {
     "application/vnd.api+json"|"application/json" contentType = "application/vnd.api+json";
 };
 
+# Represents the upload schema and data response dto.
 public type UploadSchemaAndDataResponseDto record {
+    # The execution id
     string executionId;
 };
 
+# Represents the pagination.
 public type Pagination record {
     # The next page of data
     string? next?;
@@ -1646,11 +2115,14 @@ public type ServiceDocument record {
     ServiceDocumentEntity[] value;
 };
 
+# Represents the case variables variable id resource attribute.
 public type CaseVariablesVariableIdResourceAttribute string?;
 
+# Represents the UUID.
 @constraint:String {pattern: re `[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}`}
 public type UUID string;
 
+# Represents the insight status.
 public type InsightStatus "OPEN"|"IN_PROGRESS"|"RESOLVED";
 
 # Represents the Headers record for the operation: listFiles
@@ -1660,14 +2132,20 @@ public type ListFilesHeaders record {
     "application/vnd.api+json"|"application/json" contentType = "application/vnd.api+json";
 };
 
+# Represents the files resource response schema.
 public type FilesResourceResponseSchema record {
     *Success;
+    # The data
     FilesResourceSchema data;
 };
 
+# Represents the meta response item.
 public type MetaResponseItem record {
+    # The relation type
     string rel?;
+    # The hypermedia link
     string href?;
+    # The representation payload
     MetaResponseItemRep rep?;
 };
 
@@ -1678,17 +2156,24 @@ public type GetUserHeaders record {
     "application/vnd.api+json"|"application/json" contentType = "application/vnd.api+json";
 };
 
+# Represents the syntax check request.
 public type SyntaxCheckRequest record {
+    # The resource
     string 'resource?;
+    # The ns
     string ns?;
+    # The is json
     boolean isJson?;
+    # The context
     string context?;
     # JSON representation of your model as a string
     @jsondata:Name {value: "data_json"}
     string dataJson?;
 };
 
+# Represents the success included.
 public type SuccessIncluded record {
+    # The attributes
     record {} attributes?;
     # The JSON:API resource ID
     string id?;
@@ -1696,18 +2181,25 @@ public type SuccessIncluded record {
     string 'type?;
 };
 
+# Represents the tasks resource schema.
 public type TasksResourceSchema record {
     *TasksResourceReference;
     *TasksResourceAttributes;
+    # The attributes
     TasksResourceAttributesAttributes attributes;
+    # The relationships
     record {} relationships?;
+    # The links
     record {} links?;
 };
 
+# Represents the case variables default values resource attribute.
 public type CaseVariablesDefaultValuesResourceAttribute record {}[]?;
 
+# Represents the case variables description resource attribute.
 public type CaseVariablesDescriptionResourceAttribute string?;
 
+# Represents the objective.
 public type Objective record {
     # Date and time when the objective was created
     OffsetDateTime dateCreated;
@@ -1724,6 +2216,7 @@ public type Objective record {
     OffsetDateTime dateUpdated;
 };
 
+# Represents the case variables name resource attribute.
 public type CaseVariablesNameResourceAttribute string?;
 
 # This object can contain dynamic localized 'name' variants with the locale as a suffix of the attribute, e.g. name_fr_fr, name_en_us, name_de_de, etc
@@ -1747,31 +2240,45 @@ public type DirectoryInfo record {
     string description?;
 };
 
+# Represents the process intelligence context.
 public type ProcessIntelligenceContext record {
+    # The canvas id
     @constraint:String {maxLength: 40}
     string canvasId?;
+    # The process id
     @constraint:String {maxLength: 40}
     string processId?;
+    # The widget id
     @constraint:String {maxLength: 40}
     string widgetId?;
+    # The canvas type
     ProcessIntelligenceCanvasType canvasType?;
 };
 
+# Represents the cases resource response schema.
 public type CasesResourceResponseSchema record {
     *Success;
+    # The data
     CasesResourceSchema data;
 };
 
+# Represents the tasks resource references response schema.
 public type TasksResourceReferencesResponseSchema record {
+    # The data
     TasksResourceReference[] data?;
 };
 
+# Represents the execution status dto.
 public type ExecutionStatusDto record {
+    # The display status
     string displayStatus;
+    # The message
     string message;
+    # The status
     "REQUEST_VALIDATING"|"REQUEST_VALIDATED"|"REQUEST_VALIDATION_FAILED"|"FILE_CONVERTING"|"FILE_CONVERTED"|"FILE_CONVERSION_FAILED"|"FILE_UPLOADING"|"FILE_UPLOADED"|"FILE_UPLOAD_FAILED"|"INTERNAL_SYNCHRONISING"|"INTERNAL_SYNCHRONISING_FAILED"|"COMPLETED" status;
 };
 
+# Represents the tasks created resource attribute.
 public type TasksCreatedResourceAttribute int?;
 
 # Represents the Headers record for the operation: authenticate
@@ -1781,17 +2288,25 @@ public type AuthenticateHeaders record {
     string contentType?;
 };
 
+# Represents the case variables resource references response schema.
 public type CaseVariablesResourceReferencesResponseSchema record {
+    # The data
     CaseVariablesResourceReference[] data?;
 };
 
+# Represents the incoming authorization.
 public type IncomingAuthorization record {
+    # The role
     Role role;
+    # The target id
     UUID targetId;
+    # The target type
     AuthorizationType targetType;
 };
 
+# Represents the groups resource attributes.
 public type GroupsResourceAttributes record {
+    # The attributes
     GroupsResourceAttributesAttributes attributes?;
 };
 
@@ -1807,18 +2322,30 @@ public type ListGroupUsersQueries record {
     string fields = "id,name,email";
 };
 
+# Represents the discovery reference.
 public type DiscoveryReference record {
+    # The benchmarking analytics context
     BenchmarkingAnalyticsContext benchmarkingAnalyticsContext?;
+    # The date created
     OffsetDateTime dateCreated;
+    # The end date
     OffsetDateTime endDate?;
+    # The process intelligence context
     ProcessIntelligenceContext processIntelligenceContext?;
+    # The process insights context
     ProcessInsightsContext processInsightsContext?;
+    # The unique identifier
     UUID id;
+    # The sri
     @constraint:String {pattern: re `\S`}
     string sri;
+    # The additional context
     record {|string...;|} additionalContext?;
+    # The url
     string url?;
+    # The start date
     OffsetDateTime startDate?;
+    # The date updated
     OffsetDateTime dateUpdated;
 };
 
@@ -1830,6 +2357,7 @@ public type GetBpmnXmlQueries record {
     string language?;
 };
 
+# Represents the initiative status.
 public type InitiativeStatus "TODO"|"PLANNING"|"IN_PROGRESS"|"AT_RISK"|"COMPLETED"|"ARCHIVED";
 
 # Represents the Queries record for the operation: listFiles
@@ -1845,7 +2373,9 @@ public type ListFilesQueries record {
     string filterId?;
 };
 
+# Represents the files resource attributes.
 public type FilesResourceAttributes record {
+    # The attributes
     FilesResourceAttributesAttributes attributes?;
 };
 
@@ -1896,12 +2426,17 @@ public type ListInsightsQueries record {
     "OPEN"|"IN_PROGRESS"|"RESOLVED" status?;
 };
 
+# Represents the process insights context.
 public type ProcessInsightsContext record {
+    # The system id
     UUID systemId?;
+    # The process flow id
     @constraint:String {maxLength: 32}
     string processFlowId?;
+    # The context info
     @constraint:String {pattern: re `^[a-zA-Z0-9_\-]{0,10}$`}
     string contextInfo?;
+    # The phase id
     @constraint:String {pattern: re `^[a-zA-Z0-9_\-]{0,10}$`}
     string phaseId?;
 };
@@ -1914,22 +2449,36 @@ public type TasksIdResourceAttribute record {
     int:Signed32 timestamp?;
 };
 
+# Represents the cases resource attributes attributes.
 public type CasesResourceAttributesAttributes record {
+    # The creator
     CasesCreatorResourceAttribute creator?;
+    # The variables
     CasesVariablesResourceAttribute? variables?;
+    # The milestone
     CasesMilestoneResourceAttribute? milestone?;
+    # The process id
     CasesProcessIdResourceAttribute? processId?;
+    # The case number
     CasesCaseNumberResourceAttribute? caseNumber?;
+    # The created
     CasesCreatedResourceAttribute? created?;
+    # The name
     CasesNameResourceAttribute? name?;
+    # The closed
     CasesClosedResourceAttribute? closed?;
+    # The priority
     CasesPriorityResourceAttribute? priority?;
+    # The tasks
     CasesTasksResourceAttribute? tasks?;
+    # The application link
     CasesApplicationLinkResourceAttribute? applicationLink?;
 };
 
+# Represents the groups resources response schema.
 public type GroupsResourcesResponseSchema record {
     *Success;
+    # The data
     GroupsResourceSchema[] data;
 };
 
@@ -1937,6 +2486,7 @@ public type GroupsResourcesResponseSchema record {
 public type UpdateDictionaryEntryHeaders record {
 };
 
+# Represents the tasks updated resource attribute.
 public type TasksUpdatedResourceAttribute int?;
 
 # Represents the Headers record for the operation: getFile
@@ -1952,26 +2502,38 @@ public type CreateDiagramDraftQueries record {
     string stencilset;
 };
 
+# Represents the move directory request.
 public type MoveDirectoryRequest record {
+    # The parent
     ObjectReference parent?;
 };
 
+# Represents the tasks resource attributes.
 public type TasksResourceAttributes record {
+    # The attributes
     TasksResourceAttributesAttributes attributes?;
 };
 
+# Represents the automatic measurement.
 public type AutomaticMeasurement record {
+    # The type
     "NPS"|"CSAT"|"CES" 'type;
+    # The value
     CesMeasurement|CsatMeasurement|NPSMeasurement value;
 };
 
+# Represents the asset type.
 public type AssetType "METRICS"|"PROCESS_MODEL"|"JIRA"|"LEANIX"|"SAP_CLOUD_ALM"|"TASK"|"OBJECTIVE"|"KEY_RESULT"|"DASHBOARD"|"INVESTIGATION"|"DOCUMENT"|"FILE"|"IMPROVEMENT_OPPORTUNITY"|"CORRECTION_RECOMMENDATION"|"BLOCKER"|"PROCESS_FLOW"|"OTHER";
 
+# Represents the users resource attributes attributes.
 public type UsersResourceAttributesAttributes record {
+    # The name
     UsersNameResourceAttribute? name?;
+    # The email
     UsersEmailResourceAttribute? email?;
 };
 
+# Represents the cases variables resource attribute.
 public type CasesVariablesResourceAttribute CaseVariablesResourceReference[]?;
 
 # Represents the Headers record for the operation: getTaskCaseRef
@@ -1981,11 +2543,15 @@ public type GetTaskCaseRefHeaders record {
     "application/vnd.api+json"|"application/json" contentType = "application/vnd.api+json";
 };
 
+# Represents the case variables resource schema.
 public type CaseVariablesResourceSchema record {
     *CaseVariablesResourceReference;
     *CaseVariablesResourceAttributes;
+    # The attributes
     CaseVariablesResourceAttributesAttributes attributes;
+    # The relationships
     record {} relationships?;
+    # The links
     record {} links?;
 };
 
@@ -1994,44 +2560,75 @@ public type Links record {
     *Pagination;
 };
 
+# Represents the model info response.
 public type ModelInfoResponse record {
+    # The parent
     string parent?;
+    # The formats
     record {} formats?;
+    # The granted revision user
     @jsondata:Name {value: "granted_revision_user"}
     string grantedRevisionUser?;
+    # The is licensed stencil set
     boolean isLicensedStencilSet?;
+    # The granted revision user name
     @jsondata:Name {value: "granted_revision_user_name"}
     string grantedRevisionUserName?;
+    # The description
     string description?;
+    # The type
     string 'type?;
+    # The sri revision
     @jsondata:Name {value: "sri_revision"}
     string sriRevision?;
+    # The sri path
     @jsondata:Name {value: "sri_path"}
     string sriPath?;
+    # The number of new comments
     int numberOfNewComments?;
+    # The is deployed
     boolean isDeployed?;
+    # The granted revision
     @jsondata:Name {value: "granted_revision"}
     string grantedRevision?;
+    # The rev
     int rev?;
+    # The created
     string created?;
+    # The author
     string author?;
+    # The granted revision date
     @jsondata:Name {value: "granted_revision_date"}
     string grantedRevisionDate?;
+    # The sri
     string sri?;
+    # The author company
     string authorCompany?;
+    # The revision
     string revision?;
+    # The parent name
     string parentName?;
+    # The deleted
     boolean deleted?;
+    # The author name
     string authorName?;
+    # The name
     string name?;
+    # The namespace
     string namespace?;
+    # The comment
     string comment?;
+    # The updated
     string updated?;
+    # The status
     V1modelmodelIdinfoStatus status?;
 };
 
+# Represents the files resource attributes attributes.
 public type FilesResourceAttributesAttributes record {
+    # The size
     FilesSizeResourceAttribute size?;
+    # The name
     FilesNameResourceAttribute? name?;
 };
 

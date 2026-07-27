@@ -28,7 +28,6 @@ To use the `sap.signavio` connector in your Ballerina application, update the `.
 ### Step 1: Import the module
 
 ```ballerina
-import ballerina/io;
 import ballerinax/sap.signavio;
 ```
 
@@ -50,7 +49,6 @@ final signavio:Client signavioClient = check new ({
 public function main() returns error? {
     // List the root folders of the workspace
     signavio:HyperMediaObject[] rootFolders = check signavioClient->getRootDirectories();
-    io:println("Root folders: ", rootFolders.length());
 }
 ```
 

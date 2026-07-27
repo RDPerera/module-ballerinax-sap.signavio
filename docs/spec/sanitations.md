@@ -94,7 +94,7 @@ Regenerating this connector from `docs/spec/aligned_ballerina_openapi.json` woul
 The following command was used to generate the Ballerina client from the OpenAPI specification. The command should be executed from the repository root directory. The generated `client.bal` is then renamed to `oas_client.bal` and its class renamed to `GeneratedClient` (sanitation 14); the hand-written public wrapper lives in `client.bal` and must be preserved across regenerations.
 
 ```bash
-bal openapi -i docs/spec/aligned_ballerina_openapi.json --mode client --client-methods remote --license docs/license.txt -o .
+bal openapi -i docs/spec/aligned_ballerina_openapi.json --mode client --client-methods remote --license docs/license.txt -o ballerina
 ```
 
 Note: The license year in `docs/license.txt` is currently 2026; update it before regenerating if the year has changed.

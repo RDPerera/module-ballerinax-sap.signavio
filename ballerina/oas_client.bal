@@ -174,7 +174,7 @@ isolated client class GeneratedClient {
     #
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned case variables resources response schema
     remote isolated function listCaseVariables(ListCaseVariablesHeaders headers = {}, *ListCaseVariablesQueries queries) returns CaseVariablesResourcesResponseSchema|CaseVariablesResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/case-variables`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -187,7 +187,7 @@ isolated client class GeneratedClient {
     # + id - case primary key to include
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned case variables resource response schema
     remote isolated function getCaseVariable(string id, GetCaseVariableHeaders headers = {}, *GetCaseVariableQueries queries) returns CaseVariablesResourceResponseSchema|CaseVariablesResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/case-variables/${getEncodedUri(id)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -200,7 +200,7 @@ isolated client class GeneratedClient {
     # + id - case primary key to include
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned cases resource response schema
     remote isolated function listCaseVariableCases(string id, ListCaseVariableCasesHeaders headers = {}, *ListCaseVariableCasesQueries queries) returns CasesResourceResponseSchema|CasesResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/case-variables/${getEncodedUri(id)}/cases`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -213,7 +213,7 @@ isolated client class GeneratedClient {
     # + id - case primary key to include
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned cases resource reference response schema
     remote isolated function listCaseVariableCaseRefs(string id, ListCaseVariableCaseRefsHeaders headers = {}, *ListCaseVariableCaseRefsQueries queries) returns CasesResourceReferenceResponseSchema|CasesResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/case-variables/${getEncodedUri(id)}/relationships/cases`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -225,7 +225,7 @@ isolated client class GeneratedClient {
     #
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned cases resources response schema
     remote isolated function listCases(ListCasesHeaders headers = {}, *ListCasesQueries queries) returns CasesResourcesResponseSchema|CasesResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/cases`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -238,7 +238,7 @@ isolated client class GeneratedClient {
     # + id - case primary key to include
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned cases resource response schema
     remote isolated function getCase(string id, GetCaseHeaders headers = {}, *GetCaseQueries queries) returns CasesResourceResponseSchema|error {
         string resourcePath = string `/spg/report/v1/cases/${getEncodedUri(id)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -251,7 +251,7 @@ isolated client class GeneratedClient {
     # + id - case primary key to include
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned tasks resources response schema
     remote isolated function listCaseTasks(string id, ListCaseTasksHeaders headers = {}, *ListCaseTasksQueries queries) returns TasksResourcesResponseSchema|TasksResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/cases/${getEncodedUri(id)}/tasks`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -264,7 +264,7 @@ isolated client class GeneratedClient {
     # + id - case primary key to include
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned users resource response schema
     remote isolated function getCaseCreator(string id, GetCaseCreatorHeaders headers = {}, *GetCaseCreatorQueries queries) returns UsersResourceResponseSchema|UsersResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/cases/${getEncodedUri(id)}/creator`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -276,7 +276,7 @@ isolated client class GeneratedClient {
     #
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned files resources response schema
     remote isolated function listFiles(ListFilesHeaders headers = {}, *ListFilesQueries queries) returns FilesResourcesResponseSchema|FilesResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/files`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -289,7 +289,7 @@ isolated client class GeneratedClient {
     # + id - case primary key to include
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned files resource response schema
     remote isolated function getFile(string id, GetFileHeaders headers = {}, *GetFileQueries queries) returns FilesResourceResponseSchema|FilesResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/files/${getEncodedUri(id)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -301,7 +301,7 @@ isolated client class GeneratedClient {
     #
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned groups resources response schema
     remote isolated function listGroups(ListGroupsHeaders headers = {}, *ListGroupsQueries queries) returns GroupsResourcesResponseSchema|GroupsResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/groups`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -314,7 +314,7 @@ isolated client class GeneratedClient {
     # + id - case primary key to include
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned groups resource response schema
     remote isolated function getGroup(string id, GetGroupHeaders headers = {}, *GetGroupQueries queries) returns GroupsResourceResponseSchema|GroupsResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/groups/${getEncodedUri(id)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -326,7 +326,7 @@ isolated client class GeneratedClient {
     #
     # + id - case primary key to include
     # + headers - Headers to be sent with the request 
-    # + return - OK 
+    # + return - The returned users resource references response schema
     remote isolated function listGroupUserRefs(string id, ListGroupUserRefsHeaders headers = {}) returns UsersResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/groups/${getEncodedUri(id)}/relationships/users`;
         map<string|string[]> httpHeaders = http:getHeaderMap(headers);
@@ -338,7 +338,7 @@ isolated client class GeneratedClient {
     # + id - case primary key to include
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned users resources response schema
     remote isolated function listGroupUsers(string id, ListGroupUsersHeaders headers = {}, *ListGroupUsersQueries queries) returns UsersResourcesResponseSchema|UsersResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/groups/${getEncodedUri(id)}/users`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -350,7 +350,7 @@ isolated client class GeneratedClient {
     #
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned tasks resources response schema
     remote isolated function listTasks(ListTasksHeaders headers = {}, *ListTasksQueries queries) returns TasksResourcesResponseSchema|TasksResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/tasks`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -363,7 +363,7 @@ isolated client class GeneratedClient {
     # + id - case primary key to include
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned tasks resource response schema
     remote isolated function getTask(string id, GetTaskHeaders headers = {}, *GetTaskQueries queries) returns TasksResourceResponseSchema|TasksResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/tasks/${getEncodedUri(id)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -376,7 +376,7 @@ isolated client class GeneratedClient {
     # + id - case primary key to include
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned cases resource response schema
     remote isolated function getTaskCase(string id, GetTaskCaseHeaders headers = {}, *GetTaskCaseQueries queries) returns CasesResourceResponseSchema|CasesResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/tasks/${getEncodedUri(id)}/case`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -388,7 +388,7 @@ isolated client class GeneratedClient {
     #
     # + id - case primary key to include
     # + headers - Headers to be sent with the request 
-    # + return - OK 
+    # + return - The returned cases resource reference response schema
     remote isolated function getTaskCaseRef(string id, GetTaskCaseRefHeaders headers = {}) returns CasesResourceReferenceResponseSchema|CasesResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/tasks/${getEncodedUri(id)}/relationships/case`;
         map<string|string[]> httpHeaders = http:getHeaderMap(headers);
@@ -399,7 +399,7 @@ isolated client class GeneratedClient {
     #
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned users resources response schema
     remote isolated function listUsers(ListUsersHeaders headers = {}, *ListUsersQueries queries) returns UsersResourcesResponseSchema|UsersResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/users`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -412,7 +412,7 @@ isolated client class GeneratedClient {
     # + id - case primary key to include
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - OK 
+    # + return - The returned users resource response schema
     remote isolated function getUser(string id, GetUserHeaders headers = {}, *GetUserQueries queries) returns UsersResourceResponseSchema|UsersResourceReferencesResponseSchema|error {
         string resourcePath = string `/spg/report/v1/users/${getEncodedUri(id)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -479,7 +479,7 @@ isolated client class GeneratedClient {
     #
     # + id - The ID of the dictionary entry to retrieve
     # + headers - Headers to be sent with the request 
-    # + return - Success 
+    # + return - The returned dictionary response list
     remote isolated function getDictionaryEntry(string id, GetDictionaryEntryHeaders headers = {}) returns DictionaryResponse[]|error {
         string resourcePath = string `/p/glossary/${getEncodedUri(id)}`;
         map<string|string[]> httpHeaders = withSessionHeaders(self.currentSessionHeaders(), http:getHeaderMap(headers));
@@ -490,7 +490,7 @@ isolated client class GeneratedClient {
     #
     # + id - The ID of the dictionary entry to delete
     # + headers - Headers to be sent with the request 
-    # + return - OK 
+    # + return - The returned success response
     remote isolated function deleteDictionaryEntry(string id, DeleteDictionaryEntryHeaders headers = {}) returns SuccessResponse|error {
         string resourcePath = string `/p/glossary/${getEncodedUri(id)}`;
         map<string|string[]> httpHeaders = withSessionHeaders(self.currentSessionHeaders(), http:getHeaderMap(headers));
@@ -501,7 +501,7 @@ isolated client class GeneratedClient {
     #
     # + id - The ID of the dictionary entry to retrieve
     # + headers - Headers to be sent with the request 
-    # + return - Success 
+    # + return - The returned representation
     remote isolated function getDictionaryEntryInfo(string id, GetDictionaryEntryInfoHeaders headers = {}) returns Representation|error {
         string resourcePath = string `/p/glossary/${getEncodedUri(id)}/info`;
         map<string|string[]> httpHeaders = withSessionHeaders(self.currentSessionHeaders(), http:getHeaderMap(headers));
@@ -513,7 +513,7 @@ isolated client class GeneratedClient {
     # + id - The ID of the dictionary entry to update
     # + payload - The request payload
     # + headers - Headers to be sent with the request 
-    # + return - OK 
+    # + return - The returned dictionary response
     remote isolated function updateDictionaryEntry(string id, DictionaryEntryUpdateRequest payload, UpdateDictionaryEntryHeaders headers = {}) returns DictionaryResponse|error {
         string resourcePath = string `/p/glossary/${getEncodedUri(id)}/info`;
         map<string|string[]> httpHeaders = withSessionHeaders(self.currentSessionHeaders(), http:getHeaderMap(headers));
@@ -565,7 +565,7 @@ isolated client class GeneratedClient {
     # + id - The ID of the dictionary category to update
     # + payload - The request payload
     # + headers - Headers to be sent with the request 
-    # + return - Success 
+    # + return - The returned dictionary response
     remote isolated function updateDictionaryCategory(string id, DictionaryCategoryRequest payload, UpdateDictionaryCategoryHeaders headers = {}) returns DictionaryResponse|error {
         string resourcePath = string `/p/glossarycategory/${getEncodedUri(id)}`;
         map<string|string[]> httpHeaders = withSessionHeaders(self.currentSessionHeaders(), http:getHeaderMap(headers));
@@ -580,7 +580,7 @@ isolated client class GeneratedClient {
     # + id - The dictionary category to delete
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - Success 
+    # + return - The returned success response
     remote isolated function deleteDictionaryCategory(string id, DeleteDictionaryCategoryHeaders headers = {}, *DeleteDictionaryCategoryQueries queries) returns SuccessResponse|error {
         string resourcePath = string `/p/glossarycategory/${getEncodedUri(id)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -705,7 +705,7 @@ isolated client class GeneratedClient {
     #
     # + modelId - The ID of the model
     # + headers - Headers to be sent with the request 
-    # + return - Success 
+    # + return - The binary content of the response
     remote isolated function getPng(string modelId, map<string|string[]> headers = {}) returns byte[]|error {
         string resourcePath = string `/p/model/${getEncodedUri(modelId)}/png`;
         return self.workspaceClient->get(resourcePath, withSessionHeaders(self.currentSessionHeaders(), headers));
@@ -715,7 +715,7 @@ isolated client class GeneratedClient {
     #
     # + revisionId - Revision ID
     # + headers - Headers to be sent with the request 
-    # + return - Success 
+    # + return - The binary content of the response
     remote isolated function getRevisionPng(string revisionId, map<string|string[]> headers = {}) returns byte[]|error {
         string resourcePath = string `/p/revision/${getEncodedUri(revisionId)}/png`;
         return self.workspaceClient->get(resourcePath, withSessionHeaders(self.currentSessionHeaders(), headers));
@@ -726,7 +726,7 @@ isolated client class GeneratedClient {
     # + modelId - The ID of the model
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - Success 
+    # + return - The XML response
     remote isolated function getBpmnXml(string modelId, map<string|string[]> headers = {}, *GetBpmnXmlQueries queries) returns xml|error {
         string resourcePath = string `/p/model/${getEncodedUri(modelId)}/bpmn2_0_xml`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -738,7 +738,7 @@ isolated client class GeneratedClient {
     # + revisionId - The ID of the model revision
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - Success 
+    # + return - The XML response
     remote isolated function getRevisionBpmnXml(string revisionId, map<string|string[]> headers = {}, *GetRevisionBpmnXmlQueries queries) returns xml|error {
         string resourcePath = string `/p/revision/${getEncodedUri(revisionId)}/bpmn2_0_xml`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -749,7 +749,7 @@ isolated client class GeneratedClient {
     #
     # + modelId - The ID of the model
     # + headers - Headers to be sent with the request 
-    # + return - Success 
+    # + return - The raw HTTP response
     remote isolated function getSvg(string modelId, map<string|string[]> headers = {}) returns http:Response|error {
         string resourcePath = string `/p/model/${getEncodedUri(modelId)}/svg`;
         return self.workspaceClient->get(resourcePath, withSessionHeaders(self.currentSessionHeaders(), headers));
@@ -769,7 +769,7 @@ isolated client class GeneratedClient {
     #
     # + payload - The request payload
     # + headers - Headers to be sent with the request 
-    # + return - Success 
+    # + return - The returned bpmn import result
     remote isolated function importBpmn20Xml(BpmnImportRequest payload, map<string|string[]> headers = {}) returns BpmnImportResult|error {
         string resourcePath = string `/p/bpmn2_0-import`;
         http:Request request = new;
@@ -809,7 +809,7 @@ isolated client class GeneratedClient {
     #
     # + payload - The request payload
     # + headers - Headers to be sent with the request 
-    # + return - OK 
+    # + return - The returned upload schema and data response dto
     remote isolated function uploadSchemaAndData(IngestionDataRequest payload, map<string|string[]> headers = {}) returns UploadSchemaAndDataResponseDto|error {
         string resourcePath = string `/spi/ingestions/v1/data`;
         http:Request request = new;
@@ -822,7 +822,7 @@ isolated client class GeneratedClient {
     #
     # + executionId - Ingestion request execution Id
     # + headers - Headers to be sent with the request 
-    # + return - OK 
+    # + return - The returned execution status dto
     remote isolated function getStatus(string executionId, map<string|string[]> headers = {}) returns ExecutionStatusDto|error {
         string resourcePath = string `/spi/ingestions/v1/${getEncodedUri(executionId)}/status`;
         return self.gatewayClient->get(resourcePath, self.gatewayHeaders(headers));
@@ -832,7 +832,7 @@ isolated client class GeneratedClient {
     #
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - Success 
+    # + return - The returned initiative list
     remote isolated function listInitiatives(map<string|string[]> headers = {}, *ListInitiativesQueries queries) returns Initiative[]|error {
         string resourcePath = string `/transformationmanager/v1/initiatives`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -856,7 +856,7 @@ isolated client class GeneratedClient {
     #
     # + initiativeId - The id of the initiative to retrieve
     # + headers - Headers to be sent with the request 
-    # + return - Success 
+    # + return - The returned initiative
     remote isolated function getInitiative(UUID initiativeId, map<string|string[]> headers = {}) returns Initiative|error {
         string resourcePath = string `/transformationmanager/v1/initiatives/${getEncodedUri(initiativeId)}`;
         return self.gatewayClient->get(resourcePath, self.gatewayHeaders(headers));
@@ -890,7 +890,7 @@ isolated client class GeneratedClient {
     #
     # + initiativeId - The id of the initiative containing the assets
     # + headers - Headers to be sent with the request 
-    # + return - Success 
+    # + return - The returned asset list
     remote isolated function listAssetsInitiative(UUID initiativeId, map<string|string[]> headers = {}) returns Asset[]|error {
         string resourcePath = string `/transformationmanager/v1/initiatives/${getEncodedUri(initiativeId)}/assets`;
         return self.gatewayClient->get(resourcePath, self.gatewayHeaders(headers));
@@ -915,7 +915,7 @@ isolated client class GeneratedClient {
     # + assetId - The id of the asset to retrieve
     # + initiativeId - The id of the initiative containing the asset
     # + headers - Headers to be sent with the request 
-    # + return - Success 
+    # + return - The returned asset
     remote isolated function getAssetInitiative(UUID assetId, UUID initiativeId, map<string|string[]> headers = {}) returns Asset|error {
         string resourcePath = string `/transformationmanager/v1/initiatives/${getEncodedUri(initiativeId)}/assets/${getEncodedUri(assetId)}`;
         return self.gatewayClient->get(resourcePath, self.gatewayHeaders(headers));
@@ -952,7 +952,7 @@ isolated client class GeneratedClient {
     # + initiativeId - ID of the initiative whose insights should be listed
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - Success 
+    # + return - The returned insight list
     remote isolated function listInsightsInInitiative(string initiativeId, map<string|string[]> headers = {}, *ListInsightsInInitiativeQueries queries) returns Insight[]|error {
         string resourcePath = string `/transformationmanager/v1/initiatives/${getEncodedUri(initiativeId)}/insights`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -964,7 +964,7 @@ isolated client class GeneratedClient {
     # + initiativeId - ID of the initiative to which the insight belongs
     # + insightId - ID of the insight to be retrieved
     # + headers - Headers to be sent with the request 
-    # + return - Success 
+    # + return - The returned insight
     remote isolated function getInsightInInitiative(UUID initiativeId, UUID insightId, map<string|string[]> headers = {}) returns Insight|error {
         string resourcePath = string `/transformationmanager/v1/initiatives/${getEncodedUri(initiativeId)}/insights/${getEncodedUri(insightId)}`;
         return self.gatewayClient->get(resourcePath, self.gatewayHeaders(headers));
@@ -974,7 +974,7 @@ isolated client class GeneratedClient {
     #
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - Success 
+    # + return - The returned insight list
     remote isolated function listInsights(map<string|string[]> headers = {}, *ListInsightsQueries queries) returns Insight[]|error {
         string resourcePath = string `/transformationmanager/v1/insights`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -998,7 +998,7 @@ isolated client class GeneratedClient {
     #
     # + insightId - The id of the insight to retrieve
     # + headers - Headers to be sent with the request 
-    # + return - Success 
+    # + return - The returned insight
     remote isolated function getInsight(UUID insightId, map<string|string[]> headers = {}) returns Insight|error {
         string resourcePath = string `/transformationmanager/v1/insights/${getEncodedUri(insightId)}`;
         return self.gatewayClient->get(resourcePath, self.gatewayHeaders(headers));
@@ -1032,7 +1032,7 @@ isolated client class GeneratedClient {
     #
     # + id - The ID of the model to be retrieved
     # + headers - Headers to be sent with the request 
-    # + return - Successful Operation 
+    # + return - The returned model resource response list
     remote isolated function retrieveModel(string id, map<string|string[]> headers = {}) returns ModelResourceResponse[]|error {
         string resourcePath = string `/v1/model/${getEncodedUri(id)}`;
         return self.gatewayClient->get(resourcePath, self.gatewayHeaders(headers));
@@ -1044,7 +1044,7 @@ isolated client class GeneratedClient {
     # + payload - The request payload
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - Successful Operation 
+    # + return - The returned model resource response list
     remote isolated function updateModel(string id, ModelRequest payload, map<string|string[]> headers = {}, *UpdateModelQueries queries) returns ModelResourceResponse[]|error {
         string resourcePath = string `/v1/model/${getEncodedUri(id)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -1058,7 +1058,7 @@ isolated client class GeneratedClient {
     #
     # + id - The ID of the model to be deleted
     # + headers - Headers to be sent with the request 
-    # + return - Successful Operation 
+    # + return - The returned success response
     remote isolated function deleteModel(string id, map<string|string[]> headers = {}) returns SuccessResponse|error {
         string resourcePath = string `/v1/model/${getEncodedUri(id)}`;
         return self.gatewayClient->delete(resourcePath, headers = self.gatewayHeaders(headers));
@@ -1069,7 +1069,7 @@ isolated client class GeneratedClient {
     # + payload - The request payload
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - Successful Operation 
+    # + return - The returned model response
     remote isolated function createModel(ModelRequest payload, map<string|string[]> headers = {}, *CreateModelQueries queries) returns ModelResponse|error {
         string resourcePath = string `/v1/model`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -1084,7 +1084,7 @@ isolated client class GeneratedClient {
     # + modelId - The model's ID
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
-    # + return - Successful Operation 
+    # + return - The returned model revisions response list
     remote isolated function listModelRevisions(string modelId, map<string|string[]> headers = {}, *ListModelRevisionsQueries queries) returns ModelRevisionsResponse[]|error {
         string resourcePath = string `/v1/model/${getEncodedUri(modelId)}/revisions`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
@@ -1214,7 +1214,7 @@ isolated client class GeneratedClient {
     #
     # + objectiveSid - The Suite Objective ID (SID) (e.g. SuiteObjective_<32 hex chars>)
     # + headers - Headers to be sent with the request
-    # + return - Success
+    # + return - The returned objective
     remote isolated function getObjective(string objectiveSid, map<string|string[]> headers = {}) returns Objective|error {
         string resourcePath = string `/transformationmanager/v1/objectives/by-sid/${getEncodedUri(objectiveSid)}`;
         return self.gatewayClient->get(resourcePath, self.gatewayHeaders(headers));
@@ -1224,7 +1224,7 @@ isolated client class GeneratedClient {
     #
     # + objectiveSid - The Suite Objective ID (SID) (e.g. SuiteObjective_<32 hex chars>)
     # + headers - Headers to be sent with the request
-    # + return - Success
+    # + return - The returned initiative summary for objective list
     remote isolated function getInitiativesByObjective(string objectiveSid, map<string|string[]> headers = {}) returns InitiativeSummaryForObjective[]|error {
         string resourcePath = string `/transformationmanager/v1/objectives/by-sid/${getEncodedUri(objectiveSid)}/initiatives`;
         return self.gatewayClient->get(resourcePath, self.gatewayHeaders(headers));
